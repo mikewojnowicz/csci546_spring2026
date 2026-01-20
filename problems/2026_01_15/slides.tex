@@ -1,0 +1,124 @@
+\documentclass[10pt]{beamer}
+
+%%%
+% PREAMBLE FOR THIS DOC 
+%%%
+%https://tex.stackexchange.com/questions/68821/is-it-possible-to-create-a-latex-preamble-header
+\usepackage{/Users/miw267/Repos/csci246_spring2025/slides/preambles/beamer_preamble_for_CSCI246}
+
+
+%%% TRY TO RESHOW TOC AT EACH SECTION START (with current section highlighted)
+% Reference: https://tex.stackexchange.com/questions/280436/how-to-highlight-a-specific-section-in-beamer-toc
+\newcommand\tocforsect[2]{%
+  \begingroup
+  \edef\safesection{\thesection}
+  \setcounter{section}{#1}
+  \tableofcontents[#2,currentsection]
+  \setcounter{section}{\safesection}
+  \endgroup
+}
+
+
+\usepackage[normalem]{ulem} % for strikeout (\sout)
+
+%%%% HERES HOW TO DO IT CORRECTLY
+% FIRST IN .STY FILE, DO
+%\usetheme[sectionpage=none]{metropolis}
+% THEN AT EACH SECTION DO
+%\begin{frame}{Outline}
+%  \tableofcontents[currentsection]	
+%\end{frame}
+
+
+
+%\setbeamertemplate{navigation symbols}{}
+%\setbeamertemplate{footline}[frame number]{}
+
+
+%%%
+% DOCUMENT
+%%%
+
+\begin{document}
+
+%\maketitle
+
+%% Title page frame
+%\begin{frame}
+%    \titlepage 
+%\end{frame}
+
+
+
+\title{01/15/2026: Events and their probabilities}
+\author{CSCI 546: Diffusion Models}
+\date{Textbook reference: CH 1}
+
+\begin{frame}
+    \titlepage 
+\end{frame}
+
+\begin{frame}
+\begin{myyellowbox}[title=Opening Discussion ($\approx$ 5 mins)]
+Find a partner and discuss these questions.
+\begin{enumerate}
+	\item What is your early reflection on the class?
+		\begin{itemize}
+		\item[a)] goal
+		\item[b)] hope
+		\item[c)] fear
+		\item[d)] like
+		\item[e)] dislike
+		\end{itemize}
+	\item Reflect on your experience reading the textbook.
+\end{enumerate}
+\end{myyellowbox}
+\vfill 
+\pause 
+\begin{mygreenbox}[title=Writing ($\approx$ 5 mins)]
+Please write your answers to the questions above.  I will read them and take them into account as much as possible. 
+\end{mygreenbox}
+\vfill 
+\pause 
+\begin{myredbox}[title=Announcement]
+Please sign the sign-in sheet. 
+\end{myredbox}
+\end{frame}
+
+
+\begin{frame}{Monty Hall Problem}
+\small 
+\begin{center}
+\includegraphics[width=.6\textwidth]{images/monte_hall.png}	
+\end{center}
+
+There are three doors on the set for a game show. Behind one door is a car and behind the other two doors are goats. \\
+\vfill 
+
+You get to pick a door to open. The host of the show then opens one of the other doors and reveals a goat.  What should you do if you want to maximize your chance of winning the car: stay with your original door  or switch -- or would the likelihood of winning be the same either way?
+\vfill \vfill 
+\pause 
+\colorbox{yellow!50}{Try it!} \quad 
+\scriptsize  \url{https://www.mathwarehouse.com/monty-hall-simulation-online/}
+\end{frame}
+	
+
+
+\begin{frame}{Group exercises}
+\scriptsize 
+\begin{enumerate}
+\item  (1.2.1) Let $\set{A_i : i \in I}$ be a collection of sets. Prove De Morgan's Laws:
+\[ \big( \cup_i A_i \big)^c = \cap_i A_i^c, \qquad \big( \cap_i A_i \big)^c = \cup_i A_i^c \]
+\item (1.8.3a) Let $\mathcal{F}$ be a $\sigma$-field of subsets of $\Omega$.  Show that $\mathcal{F}$ is closed under countable intersections. That is, if $A_1, A_2, \hdots$ are in $\mathcal{F}$, then so is $\cap_i A_i$.
+\item (1.2.2) Let $A$ and $B$ belong to  some $\sigma$-field $\mathcal{F}$.  Show that $\mathcal{F}$ contains the sets $A \cap B$, $A \setminus B$, and $A \, \triangle \, B$.
+\item (1.3.2) A fair coin is tossed repeatedly. Show that, with probability one, a head turns up sooner or later.  Show similarly that any finite sequence of heads or tails occurs eventually with probability one. 
+\item (1.4.5i) \textbf{The Monty Hall Problem: goats and cars.} In a game show, you have to choose one of three doors. One conceals a new car, two conceal old goats. You choose, but your chosen door is not opened immediately. Instead, the presenter opens another door, which reveals a goat.  He offers you the opportunity to change your choice to a third door (unopened and so far unchosen).  Let $p$ be the (conditional) probability that the third door conceals the car.  Show that $p=2/3$, assuming that the presenter is determined to show you a goat (show with a choice of two, he picks one at random).
+\item (1.5.9) Two fair dice are rolled. Show that the event that their sum is 7 is independent of the score shown by the first die.
+\item (1.7.2) A hand of 13 cards is dealt from a normally shuffled pack of 52 cards. What is the probability that the hand contains exactly one ace given that it contains exactly two kings? 
+\end{enumerate}
+
+
+\end{frame}
+
+
+\end{document}

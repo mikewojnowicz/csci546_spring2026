@@ -1,0 +1,155 @@
+\documentclass[10pt]{beamer}
+
+%%%
+% PREAMBLE FOR THIS DOC 
+%%%
+%https://tex.stackexchange.com/questions/68821/is-it-possible-to-create-a-latex-preamble-header
+\usepackage{/Users/miw267/Repos/csci246_spring2025/slides/preambles/beamer_preamble_for_CSCI246}
+
+
+%%% TRY TO RESHOW TOC AT EACH SECTION START (with current section highlighted)
+% Reference: https://tex.stackexchange.com/questions/280436/how-to-highlight-a-specific-section-in-beamer-toc
+\newcommand\tocforsect[2]{%
+  \begingroup
+  \edef\safesection{\thesection}
+  \setcounter{section}{#1}
+  \tableofcontents[#2,currentsection]
+  \setcounter{section}{\safesection}
+  \endgroup
+}
+
+
+\usepackage[normalem]{ulem} % for strikeout (\sout)
+
+%%%% HERES HOW TO DO IT CORRECTLY
+% FIRST IN .STY FILE, DO
+%\usetheme[sectionpage=none]{metropolis}
+% THEN AT EACH SECTION DO
+%\begin{frame}{Outline}
+%  \tableofcontents[currentsection]	
+%\end{frame}
+
+
+
+%\setbeamertemplate{navigation symbols}{}
+%\setbeamertemplate{footline}[frame number]{}
+
+
+%%%
+% DOCUMENT
+%%%
+
+\begin{document}
+
+%\maketitle
+
+%% Title page frame
+%\begin{frame}
+%    \titlepage 
+%\end{frame}
+
+
+
+\title{01/20/2026: Random Variables and their Distributions (Part 1)}
+\author{CSCI 546: Diffusion Models}
+\date{Textbook reference: Sec 2.1-2.3}
+
+\begin{frame}
+    \titlepage 
+\end{frame}
+
+\begin{frame}
+%\begin{myyellowbox}[title=Opening Discussion ($\approx$ 5 mins)]
+%Find a partner and discuss these questions.
+%\begin{enumerate}
+%	\item What is your early reflection on the class?
+%		\begin{itemize}
+%		\item[a)] goal
+%		\item[b)] hope
+%		\item[c)] fear
+%		\item[d)] like
+%		\item[e)] dislike
+%		\end{itemize}
+%	\item Reflect on your experience reading the textbook.
+%\end{enumerate}
+%\end{myyellowbox}
+%\vfill 
+%\pause 
+\begin{mygreenbox}[title=Solutions to Group Exercises]
+The solutions manual for all exercises in the textbook for the math module have been posted to Canvas. 
+\end{mygreenbox}
+\vfill 
+\pause 
+\begin{myredbox}[title=Announcement]
+Please sign the sign-in sheet. 
+\end{myredbox}
+\end{frame}
+
+\begin{frame}[standout]
+Review Problem Set \#1 	
+\end{frame}
+
+
+\begin{frame}{Monty Hall Problem}
+\small 
+\begin{center}
+\includegraphics[width=.6\textwidth]{images/monte_hall.png}	
+\end{center}
+
+There are three doors on the set for a game show. Behind one door is a car and behind the other two doors are goats. \\
+\vfill 
+
+You get to pick a door to open. The host of the show then opens one of the other doors and reveals a goat.  What should you do if you want to maximize your chance of winning the car: stay with your original door  or switch -- or would the likelihood of winning be the same either way?
+\vfill \vfill 
+\pause 
+\colorbox{yellow!50}{Try it!} \quad 
+\scriptsize  \url{https://www.mathwarehouse.com/monty-hall-simulation-online/}
+\end{frame}
+	
+
+\begin{frame}[standout]
+Mini-lecture	
+\end{frame}
+
+\begin{frame}{Distribution Functions}
+\begin{center}
+\includegraphics[width=.7\textwidth]{images/mixed_RV.png}	
+\end{center}
+\vfill 
+\pause 
+\begin{center}
+\includegraphics[width=.6\textwidth]{images/mixed_RV_dist_funct.png}	
+\end{center}
+\vfill 
+\pause 
+\begin{center}
+\includegraphics[width=.7\textwidth]{images/dist_funct.png}	
+\end{center}
+\end{frame}
+
+
+\begin{frame}{Discrete and continuous RVs}
+\begin{center}
+\includegraphics[width=\textwidth]{images/discrete_RV}	
+\end{center}
+\vfill 
+\pause 
+\begin{center}
+\includegraphics[width=\textwidth]{images/continuous_RV}	
+\end{center}
+\end{frame}
+
+
+
+\begin{frame}{Group exercises - Problem Set 2}
+\begin{enumerate}
+\item  (2.1.6) \textbf{Uniform Distribution.}  A random variable that is equally likely to take any value in a finite set $S$ is said to to have the \textit{uniform distribution} on $S$.  If $U$ is such a random variable and $\emptyset \neq R \subseteq S$, show that the distribution of $U$ conditional on $\set{U \in R}$ is uniform in $R$. 
+\item (2.2.3) Let $\set{X_r : r \geq 1}$ be observations which are independent and identically distributed with unknown distribution function $F$.  Describe and justify a method for estimating $F(x)$. 
+\item (2.3.4) Show that, if $f$ and $g$ are density functions, and $0 \leq \lambda \leq 1$, then $\lambda f + (1-\lambda) g$ is a density.  Is the product $fg$ a density function?
+\end{enumerate}
+
+
+\end{frame}
+
+
+\end{document}

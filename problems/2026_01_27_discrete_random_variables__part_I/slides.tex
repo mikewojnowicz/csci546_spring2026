@@ -1,0 +1,175 @@
+\documentclass[10pt]{beamer}
+
+
+
+%%%
+% PREAMBLE FOR THIS DOC 
+%%%
+%https://tex.stackexchange.com/questions/68821/is-it-possible-to-create-a-latex-preamble-header
+\usepackage{/Users/miw267/Repos/csci246_spring2025/slides/preambles/beamer_preamble_for_CSCI246}
+
+\usepackage{wrapfig}  
+
+
+%%% TRY TO RESHOW TOC AT EACH SECTION START (with current section highlighted)
+% Reference: https://tex.stackexchange.com/questions/280436/how-to-highlight-a-specific-section-in-beamer-toc
+\newcommand\tocforsect[2]{%
+  \begingroup
+  \edef\safesection{\thesection}
+  \setcounter{section}{#1}
+  \tableofcontents[#2,currentsection]
+  \setcounter{section}{\safesection}
+  \endgroup
+}
+
+
+\usepackage[normalem]{ulem} % for strikeout (\sout)
+
+%%%% HERES HOW TO DO IT CORRECTLY
+% FIRST IN .STY FILE, DO
+%\usetheme[sectionpage=none]{metropolis}
+% THEN AT EACH SECTION DO
+%\begin{frame}{Outline}
+%  \tableofcontents[currentsection]	
+%\end{frame}
+
+
+
+%\setbeamertemplate{navigation symbols}{}
+%\setbeamertemplate{footline}[frame number]{}
+
+
+%%%
+% DOCUMENT
+%%%
+
+\begin{document}
+
+%\maketitle
+
+%% Title page frame
+%\begin{frame}
+%    \titlepage 
+%\end{frame}
+
+
+
+\title{01/27/2026: Discrete Random Variables (Part 1)}
+\author{CSCI 546: Diffusion Models}
+\date{Textbook reference: Sec 3.1-3.5}
+
+\begin{frame}
+    \titlepage 
+\end{frame}
+
+\begin{frame}
+%\begin{myyellowbox}[title=Opening Discussion ($\approx$ 5 mins)]
+%Find a partner and discuss these questions.
+%\begin{enumerate}
+%	\item What is your early reflection on the class?
+%		\begin{itemize}
+%		\item[a)] goal
+%		\item[b)] hope
+%		\item[c)] fear
+%		\item[d)] like
+%		\item[e)] dislike
+%		\end{itemize}
+%	\item Reflect on your experience reading the textbook.
+%\end{enumerate}
+%\end{myyellowbox}
+%\vfill 
+%\pause 
+\begin{mygreenbox}[title=Announcement (Sign-in Sheet)]
+Please sign the sign-in sheet.
+\end{mygreenbox}
+\vfill 
+\pause 
+\begin{myredbox}[title=\text{Announcement (Office Hours)}]
+My office hours this Thursday need to be changed due to a grant meeting.  If you would like to meet on Thursday, please send me an email to set up a time.
+\end{myredbox}
+\vfill 
+\pause 
+\begin{myyellowbox}[title=\text{Announcement (Group exercises)}]
+Group exercises will be posted to the course repo after class. Please continue working on what you don't finish in class.  
+\end{myyellowbox}
+\end{frame}
+
+\begin{frame}[standout]
+Bayes Law Practice
+\end{frame}
+
+
+\begin{frame}[standout]
+Review Problem Set \#3	
+\end{frame}
+
+
+\begin{frame}{Binomial Distribution}
+
+The \textbf{Binomial distribution} with parameters $n,p$ is the discrete probability distribution of the number of successes in a sequence of $n$ independent experiments, each asking a yes-no question, whose outcome is yes (or ``success'') with probability $p$ and no (or ``failure'') with probability $1-p$.
+\pause 
+\begin{figure}
+\includegraphics[width=.5\textwidth]{images/binomial_distribution}
+\end{figure}
+\pause 
+\[ P(X=k) = \binom{n}{k} p^{k} (1-p)^{n-k} \]
+
+\end{frame}
+
+
+\begin{frame}{Poisson Distribution}
+
+The \textbf{Poisson distribution} with rate $\lambda$ is a discrete probability distribution that calculates the likelihood of a certain number of events occurring within a fixed interval of time, assuming the events occur independently.
+\pause 
+\begin{figure}
+\includegraphics[width=.6\textwidth]{images/poisson_distribution}
+\end{figure}
+\pause 
+\[ P(X=k) = \frac{\lambda^k}{k!} e^{-\lambda} \]
+
+	
+\end{frame}
+
+
+\begin{frame}{Random Groups}
+
+\begin{columns}
+\begin{column}{0.33\textwidth}
+Aubrey Williams: 5 \\ 
+Austin Barton : 2 \\ 
+Blake Sigmundstad: 1 \\ 
+Diego Moylan: 6 \\ 
+Dillon Shaffer: 3 \\ 
+Felicia Jayasaputra: 1 \\ 
+Ismoiljon Muzaffarov: 7 \\\end{column}
+\begin{column}{0.33\textwidth}
+Jacob Tanner: 4 \\ 
+Josh Stoneback: 2 \\ 
+Joshua Bowen: 3 \\ 
+Joshua Calwell: 5 \\ 
+Laura Banaszewski: 1 \\ 
+Lina Hammel: 8 \\ 
+Logan Racz: 8 \\\end{column}
+\begin{column}{0.33\textwidth}
+Matt Hall: 7 \\ 
+Micah Miller: 4 \\ 
+Mike Kadoshnikov: 2 \\ 
+Owen Cool: 6 \\ 
+Racquel Bowen: 4 \\ 
+Samuel Mocabee: 5 \\ 
+Tatiana Kirillova: 3 \\\end{column}
+\end{columns}
+
+\end{frame}
+
+
+
+\begin{frame}{Group exercises - Problem Set 4}
+\begin{enumerate}
+\item (3.2.1) Let $X$ and $Y$ be independent random variables, each taking the values -1 and 1 with probability $\frac{1}{2}$, and let $Z=XY$. Show that $X,Y$ and $Z$ are pairwise independent. Are they independent?
+\item (3.5.2) In your pocket is a random number $N$ of coins, where $N$ has the Poisson distribution with parameter $\lambda$.  You toss each coin once, with heads showing with probability $p$ each time.  Show that the total number of heads has the Poisson distribution with parameter $\lambda p$.
+\end{enumerate}   
+\end{frame}
+
+
+\end{document}

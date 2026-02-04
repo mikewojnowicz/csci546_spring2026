@@ -197,19 +197,44 @@ P(X > s+t \mid X > t ) = P (X>s), \qquad \text{ for all } s,t \geq 0
 \vfill 
 \only<2>{\colorbox{yellow!30}{\textbf{Poll.}} Who can explain what the above equation is saying?}
 
-\only<3-4>{\colorbox{red!30}{\textbf{Interpretation.}} If we think of $X$ as being the lifetime of some instrument, \Eqref{eqn:memoryless} says:
+%\only<3-4>{\colorbox{red!30}{\textbf{Interpretation.}} If we think of $X$ as waiting time for the next snowfall, \Eqref{eqn:memoryless} says:
+%
+%\vspace{.2cm}
+%
+%\begin{quote}
+%\textit{If we're still waiting for snowfall at time $t$, the distribution of the remaining
+%amount of time that we must wait is the same as the original waiting distribution.}
+%\end{quote}
+%}
+%
+%
+%
+%\only<4>{That is, it is as if Mother Nature not ``remember'' that we've already been waiting for time $t$.}
+
+\begin{columns}
+\begin{column}{0.6\textwidth}
+
+\only<3-4>{\colorbox{red!30}{\textbf{Interpretation.}} If we think of $X$ as waiting time for the next snowfall, \Eqref{eqn:memoryless} says:
 
 \vspace{.2cm}
 
 \begin{quote}
-\textit{If the instrument is alive at time $t$, the distribution of the remaining
-amount of time that it survives is the same as the original lifetime distribution.}
+\textit{If we're still waiting for snowfall at time $t$, the distribution of the remaining
+amount of time that we must wait is the same when we started waiting.}
 \end{quote}
 }
 
+\only<4>{That is, it is as if Mother Nature does not ``remember'' that we've already been waiting for time $t$.}
 
+\end{column}
 
-\only<4>{That is, it is as if the instrument does not ``remember'' that it has already been in use for time $t$.}
+\begin{column}{0.4\textwidth}
+\only<3-4>{
+    \centering
+    \includegraphics[width=\textwidth]{images/skiing}
+}
+\end{column}
+\end{columns}
 
 
 \end{frame}
@@ -244,7 +269,7 @@ Although simple, the uniform distribution is surprisingly useful.  E.g.:
 \begin{itemize}
 \item Random number generation by a computer.  (Non-uniform random numbers are often obtained by transforming uniform samples.)
 \item Random angles in physics.
-\item Monte carlo estimates of an integral $\int_{a}^b f(u) \wrt{u} \approx (b-a) \frac{1}{S} \sum_{s=1}^S f(u^^s)$ where $u^^s \sim U[a,b]$.
+\item Monte carlo estimates of an integral $\int_{a}^b f(u) \wrt{u}$. %\approx (b-a) \frac{1}{S} \sum_{s=1}^S f(u^^s)$ where $u^^s \sim U[a,b]$.
 \end{itemize}
 
 \end{frame}

@@ -85,6 +85,43 @@ Please sign the sign-in sheet.
 \end{myredbox}
 \end{frame}
 
+\begin{frame}[standout]
+Thoughts on Chapter 1 
+\end{frame}
+
+\begin{frame}{Countable Additivity}
+\begin{figure}[ht]
+\centering
+\scalebox{0.9}{
+\begin{tikzpicture}
+    \node[anchor=south west, inner sep=0] (img) at (0,0)
+        {\includegraphics[width=.75\textwidth]{images/meme}};
+    \begin{scope}[x={(img.south east)}, y={(img.north west)}]
+
+        % Top-right center equation
+        \node at (0.75,0.75) {
+         $P \big( \cup_{i=1}^\infty A_i \big) = \sum_{i=1}^\infty P(A_i) $
+        };
+
+        % Bottom-right center equation
+        \node at (0.75,0.25) {
+    $P \big( \cupdot_{i=1}^\infty A_i \big) = \sum_{i=1}^\infty P(A_i) $
+        };
+
+    \end{scope}
+\end{tikzpicture}
+}
+\end{figure}
+\pause 
+\only<2>{\colorbox{yellow!30}{\textbf{Poll.}} What does this mean?}
+\pause 
+\only<3>{\colorbox{green!30}{\textbf{Interpretation.}} Probability is additive \textbf{only} over \underline{disjoint} unions.}
+\pause 
+\only<4>{\colorbox{red!30}{\textbf{Example (Dice).}} $P(\texttt{roll 1 or 2}) = P(\texttt{roll 1}) + P(\texttt{roll 2})$.}
+\pause 
+\only<5>{\colorbox{red!30}{\textbf{Anti-example.}} $P(\texttt{male or old}) \neq P(\texttt{male}) + P(\texttt{old})$.}
+\end{frame}
+
 
 \begin{frame}{Monty Hall Problem}
 \small 

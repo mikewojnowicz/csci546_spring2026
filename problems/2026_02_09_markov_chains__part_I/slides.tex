@@ -1,0 +1,173 @@
+\documentclass[10pt]{beamer}
+
+
+
+%%%
+% PREAMBLE FOR THIS DOC 
+%%%
+%https://tex.stackexchange.com/questions/68821/is-it-possible-to-create-a-latex-preamble-header
+\usepackage{/Users/miw267/Repos/csci246_spring2025/slides/preambles/beamer_preamble_for_CSCI246}
+
+\usepackage{wrapfig}  
+
+
+%%% TRY TO RESHOW TOC AT EACH SECTION START (with current section highlighted)
+% Reference: https://tex.stackexchange.com/questions/280436/how-to-highlight-a-specific-section-in-beamer-toc
+\newcommand\tocforsect[2]{%
+  \begingroup
+  \edef\safesection{\thesection}
+  \setcounter{section}{#1}
+  \tableofcontents[#2,currentsection]
+  \setcounter{section}{\safesection}
+  \endgroup
+}
+
+
+\usepackage[normalem]{ulem} % for strikeout (\sout)
+
+%%%% HERES HOW TO DO IT CORRECTLY
+% FIRST IN .STY FILE, DO
+%\usetheme[sectionpage=none]{metropolis}
+% THEN AT EACH SECTION DO
+%\begin{frame}{Outline}
+%  \tableofcontents[currentsection]	
+%\end{frame}
+
+
+
+%\setbeamertemplate{navigation symbols}{}
+%\setbeamertemplate{footline}[frame number]{}
+
+
+%%%
+% DOCUMENT
+%%%
+
+\begin{document}
+
+%\maketitle
+
+%% Title page frame
+%\begin{frame}
+%    \titlepage 
+%\end{frame}
+
+
+
+\title{02/09/2026: Markov Chains (Part 1)}
+\author{CSCI 546: Diffusion Models}
+\date{Textbook reference: Sec 6.1-6.2}
+
+\begin{frame}
+    \titlepage 
+\end{frame}
+
+\begin{frame}
+%\begin{myyellowbox}[title=Opening Discussion ($\approx$ 5 mins)]
+%Find a partner and discuss these questions.
+%\begin{enumerate}
+%	\item What is your early reflection on the class?
+%		\begin{itemize}
+%		\item[a)] goal
+%		\item[b)] hope
+%		\item[c)] fear
+%		\item[d)] like
+%		\item[e)] dislike
+%		\end{itemize}
+%	\item Reflect on your experience reading the textbook.
+%\end{enumerate}
+%\end{myyellowbox}
+%\vfill 
+%\pause 
+\begin{mygreenbox}[title=Announcement (Sign-in Sheet)]
+Please sign the sign-in sheet.
+\end{mygreenbox}
+%\vfill 
+%\pause 
+%\begin{myredbox}[title=\text{Announcement (Office Hours)}]
+%My office hours today need to be changed due to a grant meeting.  If you would like to meet on today, please send me an email to set up a time.
+%\end{myredbox}
+%\vfill 
+%\pause 
+%\begin{myyellowbox}[title=\text{Announcement (Group exercises)}]
+%Group exercises will be posted to the course repo after class. Please continue working on what you don't finish in class.  
+%\end{myyellowbox}
+\end{frame}
+
+\begin{frame}[standout]
+Review Problem Set \#7	
+\end{frame}
+
+\begin{frame}[standout]
+Concepts for Problem Set \#8
+\end{frame}
+
+\begin{frame}{Simple random walk}
+
+For timesteps $n=1,2,3,\hdots$, let 
+\[ X_n =
+\begin{cases}
+1, &\text{ with probability } p \\
+-1, &\text{ with probability } q=1-p
+\end{cases}
+ \]
+
+Then a \alert{simple random walk} (in one dimension) is given by
+\[ S_n = S_0 + \sum_{i=1}^n X_i,\]
+where $S_0$ is the starting position.
+
+\vfill 
+
+\begin{center}
+\includegraphics[width=.7\textwidth]{images/random_walk.png}
+\end{center}	
+
+\end{frame}
+
+
+\begin{frame}{Random Groups}
+
+\begin{columns}
+\begin{column}{0.33\textwidth}
+Aubrey Williams: 6 \\ 
+Austin Barton : 6 \\ 
+Blake Sigmundstad: 3 \\ 
+Diego Moylan: 2 \\ 
+Dillon Shaffer: 1 \\ 
+Ismoiljon Muzaffarov: 7 \\ 
+Jacob Tanner: 3 \\\end{column}
+\begin{column}{0.33\textwidth}
+Josh Stoneback: 3 \\ 
+Joshua Bowen: 1 \\ 
+Joshua Culwell: 5 \\ 
+Laura Banaszewski: 5 \\ 
+Lina Hammel: 4 \\ 
+Logan Racz: 1 \\\end{column}
+\begin{column}{0.33\textwidth}
+Matt Hall: 4 \\ 
+Micah Miller: 8 \\ 
+Mike Kadoshnikov: 8 \\ 
+Owen Cool: 2 \\ 
+Racquel Bowen: 2 \\ 
+Samuel Mocabee: 4 \\ 
+Tatiana Kirillova: 7 \\\end{column}
+\end{columns}
+
+\end{frame}
+
+
+\begin{frame}{Group exercises - Problem Set 8} 
+\begin{enumerate}
+\item (6.1.2) A die is rolled repeatedly.  Which of the following are Markov chains? For those that are, supply the transition matrix
+	\begin{itemize}
+	\item[(a)] The largest number $X_n$ shown up to the $n$-th roll.
+	\item[(b)] The number $N_n$ of sixes in $n$ rolls.
+	\item[(c)] At time $r$, the time $C_r$ since the most recent six.
+	\item[(d)] At time $r$, the time $B_r$ until the next six.
+	\end{itemize}
+\item (Sec 6.2) Show that a simple random walk is periodic with period 2.  Then show that a simple random walk is recurrent if $p=\half$ but transient if $p \neq \half$. 
+\end{enumerate}   
+\end{frame}
+
+
+\end{document}

@@ -1,0 +1,150 @@
+\documentclass[10pt]{beamer}
+
+
+
+%%%
+% PREAMBLE FOR THIS DOC 
+%%%
+%https://tex.stackexchange.com/questions/68821/is-it-possible-to-create-a-latex-preamble-header
+\usepackage{/Users/miw267/Repos/csci246_spring2025/slides/preambles/beamer_preamble_for_CSCI246}
+
+\usepackage{wrapfig}  
+
+
+%%% TRY TO RESHOW TOC AT EACH SECTION START (with current section highlighted)
+% Reference: https://tex.stackexchange.com/questions/280436/how-to-highlight-a-specific-section-in-beamer-toc
+\newcommand\tocforsect[2]{%
+  \begingroup
+  \edef\safesection{\thesection}
+  \setcounter{section}{#1}
+  \tableofcontents[#2,currentsection]
+  \setcounter{section}{\safesection}
+  \endgroup
+}
+
+
+\usepackage[normalem]{ulem} % for strikeout (\sout)
+
+%%%% HERES HOW TO DO IT CORRECTLY
+% FIRST IN .STY FILE, DO
+%\usetheme[sectionpage=none]{metropolis}
+% THEN AT EACH SECTION DO
+%\begin{frame}{Outline}
+%  \tableofcontents[currentsection]	
+%\end{frame}
+
+
+
+%\setbeamertemplate{navigation symbols}{}
+%\setbeamertemplate{footline}[frame number]{}
+
+
+%%%
+% DOCUMENT
+%%%
+
+\begin{document}
+
+%\maketitle
+
+%% Title page frame
+%\begin{frame}
+%    \titlepage 
+%\end{frame}
+
+
+
+\title{02/12/2026: Markov Chains (Part 2)}
+\author{CSCI 546: Diffusion Models}
+\date{Textbook reference: Sec 6.1-6.2}
+
+\begin{frame}
+    \titlepage 
+\end{frame}
+
+\begin{frame}
+%\begin{myyellowbox}[title=Opening Discussion ($\approx$ 5 mins)]
+%Find a partner and discuss these questions.
+%\begin{enumerate}
+%	\item What is your early reflection on the class?
+%		\begin{itemize}
+%		\item[a)] goal
+%		\item[b)] hope
+%		\item[c)] fear
+%		\item[d)] like
+%		\item[e)] dislike
+%		\end{itemize}
+%	\item Reflect on your experience reading the textbook.
+%\end{enumerate}
+%\end{myyellowbox}
+%\vfill 
+%\pause 
+\begin{mygreenbox}[title=Announcement (Sign-in Sheet)]
+Please sign the sign-in sheet.
+\end{mygreenbox}
+%\vfill 
+%\pause 
+%\begin{myredbox}[title=\text{Announcement (Office Hours)}]
+%My office hours today need to be changed due to a grant meeting.  If you would like to meet on today, please send me an email to set up a time.
+%\end{myredbox}
+%\vfill 
+%\pause 
+%\begin{myyellowbox}[title=\text{Announcement (Group exercises)}]
+%Group exercises will be posted to the course repo after class. Please continue working on what you don't finish in class.  
+%\end{myyellowbox}
+\end{frame}
+
+\begin{frame}[standout]
+Review Problem Set \#8
+\end{frame}
+
+\begin{frame}[standout]
+Concepts for Problem Set \#9
+\end{frame}
+
+
+\begin{frame}{Random Groups}
+
+\begin{columns}
+\begin{column}{0.33\textwidth}
+Aubrey Williams: 5 \\ 
+Austin Barton : 1 \\ 
+Blake Sigmundstad: 8 \\ 
+Diego Moylan: 4 \\ 
+Dillon Shaffer: 4 \\ 
+Ismoiljon Muzaffarov: 7 \\ 
+Jacob Tanner: 6 \\\end{column}
+\begin{column}{0.33\textwidth}
+Josh Stoneback: 2 \\ 
+Joshua Bowen: 3 \\ 
+Joshua Culwell: 5 \\ 
+Laura Banaszewski: 4 \\ 
+Lina Hammel: 1 \\ 
+Logan Racz: 1 \\\end{column}
+\begin{column}{0.33\textwidth}
+Matt Hall: 2 \\ 
+Micah Miller: 8 \\ 
+Mike Kadoshnikov: 3 \\ 
+Owen Cool: 2 \\ 
+Racquel Bowen: 3 \\ 
+Samuel Mocabee: 6 \\ 
+Tatiana Kirillova: 7 \\\end{column}
+\end{columns}
+
+\end{frame}
+
+
+\begin{frame}{Group exercises - Problem Set 9} 
+\begin{enumerate}
+\item (6.2.3) Show that a state $i$ is recurrent if and only if the mean number of visits of the chain to $i$, having started at $i$, is infinite. 
+\item (6.4.6) \textbf{Random walk on a graph.} A particle performs a random walk on a vertex set of a connected graph $G$, which for simplicity we assume to have neither loops nor multiple edges.  At each stage it moves to a neighbor of its current position, each such neighbor being chosen with equal probability.  If $G$ has $\eta (< \infty)$ edges, show that the stationary distribution is given by $\pi_v = d_v/(2\eta)$, where $d$ is the degree of vertex $v$.
+\item (6.4.11a) \textbf{Bow tie.} A particle performs a random walk on a bow tie ABCDE drawn beneath, where $C$ is the knot.  From any vertex its next step is equally likely to be any neighboring vertex.  Initially it is at A.  Find the expected value of the time of first return to A.
+\begin{center}
+\includegraphics[width=.25\textwidth]{images/bow_tie.png}	
+\end{center}
+
+\end{enumerate}   
+\end{frame}
+
+
+\end{document}

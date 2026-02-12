@@ -54,7 +54,7 @@
 
 
 
-\title{02/09/2026: Markov Chains (Part 1)}
+\title{02/10/2026: Markov Chains (Part 1)}
 \author{CSCI 546: Diffusion Models}
 \date{Textbook reference: Sec 6.1-6.2}
 
@@ -102,7 +102,40 @@ Review Problem Set \#7
 Concepts for Problem Set \#8
 \end{frame}
 
-\begin{frame}{Simple random walk}
+\begin{frame}{Markov Chains}
+
+Suppose we observe a random sequence $(x_n)_{n=1}^\infty$.  
+
+
+By chain rule, we can \alert{always} write the joint density as:
+\begin{align*}
+p(x_1,x_2,\hdots, x_n) &= p(x_1) p(x_2 \mid x_1) p(x_3 \mid x_1, x_2) \cdots p(x_n \mid x_1, x_2, \hdots x_{n-2}, x_{n-1})	
+\end{align*}
+\pause 
+\red{Markov chains} are special sequences whose joint density simplifies to:
+\begin{align*}
+p(x_1,x_2,\hdots, x_n) &= p(x_1) p(x_2 \mid x_1) p(x_3 \mid \red{\cancel{x_1}}, x_2) \cdots p(x_n \mid  \red{\cancel{x_1, x_2}}, \hdots  \red{\cancel{x_{n-2}}}, x_{n-1})	
+\end{align*}
+\pause 
+That is, Markov chains satisfy
+\begin{align*}
+p(x_{n+1} \cond x_{1:n}) = p(x_{n+1} \mid x_{n})
+\end{align*}
+\pause 
+\vfill 
+In words:
+\vspace{.2cm}
+
+\fcolorbox{red!60}{red!15}{
+  \parbox{0.9\linewidth}{
+    The future is conditionally independent of the past given the present.
+  }
+}
+
+\end{frame}
+
+
+\begin{frame}{Example: Simple random walk}
 
 For timesteps $n=1,2,3,\hdots$, let 
 \[ X_n =
@@ -165,7 +198,13 @@ Tatiana Kirillova: 7 \\\end{column}
 	\item[(c)] At time $r$, the time $C_r$ since the most recent six.
 	\item[(d)] At time $r$, the time $B_r$ until the next six.
 	\end{itemize}
-\item (Sec 6.2) Show that a simple random walk is periodic with period 2.  Then show that a simple random walk is recurrent if $p=\half$ but transient if $p \neq \half$. 
+\item (Sec 6.2) Show that a simple random walk is periodic with period 2.  Then show that a simple random walk is recurrent if $p=\half$ but transient if $p \neq \half$.  \pause 
+	\begin{itemize}
+	\item Hint: Use Stirling's formula: $n! \sim \sqrt{2 \pi n} \, \big(\frac{n}{e}\big)^n$. \pause 
+	\item For additional help, see slide 22 \href{https://www.stat.uchicago.edu/~yibi/teaching/stat317/2021/Lectures/Lecture3.pdf.}{\blue{\underline{here.}}} 
+	\end{itemize}
+	
+
 \end{enumerate}   
 \end{frame}
 

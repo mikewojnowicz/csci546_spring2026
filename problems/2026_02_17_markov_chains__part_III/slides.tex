@@ -1,0 +1,520 @@
+\documentclass[10pt]{beamer}
+
+
+
+%%%
+% PREAMBLE FOR THIS DOC 
+%%%
+%https://tex.stackexchange.com/questions/68821/is-it-possible-to-create-a-latex-preamble-header
+\usepackage{/Users/miw267/Repos/csci246_spring2025/slides/preambles/beamer_preamble_for_CSCI246}
+
+\usepackage{wrapfig}  
+
+
+%%% TRY TO RESHOW TOC AT EACH SECTION START (with current section highlighted)
+% Reference: https://tex.stackexchange.com/questions/280436/how-to-highlight-a-specific-section-in-beamer-toc
+\newcommand\tocforsect[2]{%
+  \begingroup
+  \edef\safesection{\thesection}
+  \setcounter{section}{#1}
+  \tableofcontents[#2,currentsection]
+  \setcounter{section}{\safesection}
+  \endgroup
+}
+
+
+\usepackage[normalem]{ulem} % for strikeout (\sout)
+
+%%%% HERES HOW TO DO IT CORRECTLY
+% FIRST IN .STY FILE, DO
+%\usetheme[sectionpage=none]{metropolis}
+% THEN AT EACH SECTION DO
+%\begin{frame}{Outline}
+%  \tableofcontents[currentsection]	
+%\end{frame}
+
+
+
+%\setbeamertemplate{navigation symbols}{}
+%\setbeamertemplate{footline}[frame number]{}
+
+
+%%%
+% DOCUMENT
+%%%
+
+\begin{document}
+
+%\maketitle
+
+%% Title page frame
+%\begin{frame}
+%    \titlepage 
+%\end{frame}
+
+
+
+\title{02/17/2026: Markov Chains (Part 3)}
+\author{CSCI 546: Diffusion Models}
+\date{Textbook reference: Sec 6.5, 6.6, 6.9}
+
+\begin{frame}
+    \titlepage 
+\end{frame}
+
+\begin{frame}
+%\begin{myyellowbox}[title=Opening Discussion ($\approx$ 5 mins)]
+%Find a partner and discuss these questions.
+%\begin{enumerate}
+%	\item What is your early reflection on the class?
+%		\begin{itemize}
+%		\item[a)] goal
+%		\item[b)] hope
+%		\item[c)] fear
+%		\item[d)] like
+%		\item[e)] dislike
+%		\end{itemize}
+%	\item Reflect on your experience reading the textbook.
+%\end{enumerate}
+%\end{myyellowbox}
+%\vfill 
+%\pause 
+\begin{mygreenbox}[title=Announcement (Sign-in Sheet)]
+Please sign the sign-in sheet.
+\end{mygreenbox}
+
+\vfill 
+\pause 
+\begin{myyellowbox}[title=\text{Intro Tutorial to Tempest}]
+By Jess Kunke, Asst. Professor of Statistics \\
+Wednesday, February 18th 4:10-5:00 PM \\
+Wilson 1-154
+\end{myyellowbox}
+
+\vfill 
+\pause 
+
+\begin{myredbox}[title=\text{A look at the syllabus}]
+\begin{itemize}
+\item I've added some additional readings to the diffusion section which give some nice motivation and intuition.
+\item I'm considering splitting the final topic  (stochastic calculus) up across 2 days. Thoughts?
+\end{itemize}
+\end{myredbox}
+
+\end{frame}
+
+\begin{frame}[standout]
+Review Problem Set \#9
+\end{frame}
+
+\begin{frame}[standout]
+Concepts for Problem Set \#10
+\end{frame}
+
+
+
+\begin{frame}[standout]
+Outline for today's material
+\begin{itemize}
+\item \textbullet \quad \alert{Reversibility}
+\item \textbullet \quad Chains with finitely many states
+\item \textbullet \quad Continuous-time Markov chains
+\end{itemize}
+
+\end{frame}
+
+\begin{frame}{Stationarity as ``global balance''}
+
+\begin{mygreenbox}[title=Stationarity]
+Recall that $\+\pi$ is a stationary distribution for a Markov chain if
+\[ \+\pi = \+\pi \+P,\]
+where $\+\pi$ is a row vector and $\+P$ is the transition probability matrix of the Markov chain.	
+\end{mygreenbox}
+\vfill 
+\pause 
+
+\only<2-3>{The \colorbox{yellow!30}{\textbf{most common interpretation}} of stationarity: $\+\pi$ gives the long-run frequencies of inhabiting each state.} 
+\only<3>{However, we can also give another interpretation.}
+
+\only<4>{
+\begin{myredbox}[title=Stationarity as ``global balance'']
+\begin{align*}
+\+\pi &= \+\pi \+P \\
+\implies \pi_j &= \sum_i \pi_i P_{ij} && \scripttext{(matrix multiplication)}  \\
+\implies \sum_i \pi_j P_{ji} &= \sum_i \pi_i P_{ij} && \scripttext{(probabilities sum to 1)}\\
+\end{align*}
+\end{myredbox}
+}
+
+
+\only<5>{
+\begin{myredbox}[title=Stationarity as ``global balance'']
+%\begin{align*}
+%\explaintermbrace{$\+\pi$ is stationary}{\+\pi = \+\pi \+P}	 \quad \iff \quad \explaintermbrace{total flow out of state $j$}{\sum_i \pi_j P_{ji}} = \explaintermbrace{total flow into state $j$}{\sum_i \pi_i P_{ij}} \\
+%\end{align*}
+\begin{align*}
+\explaintermbrace{total flow \underline{\textbf{out of}} state $j$}{\sum_i \pi_j P_{ji}} = \explaintermbrace{total flow \underline{\textbf{into}} state $j$}{\sum_i \pi_i P_{ij}} \\
+\end{align*}
+
+\end{myredbox}
+}
+\end{frame}
+
+
+\begin{frame}{Reversibility as ``local balance''}
+
+\begin{myredbox}[title=``Local balance'': a stronger condition than reversibility]
+\begin{align*}
+\explaintermbrace{total flow from $j$ to $j$}{\pi_j P_{ji}} = \explaintermbrace{total flow from $i$ to $j$}{\pi_i P_{ij}} \\
+\end{align*}
+\end{myredbox}
+\pause 
+\vfill 
+\colorbox{yellow!30}{\textbf{Why do we care?}} \pause This tells us when Markov chains are \alert{reversible.}
+\pause 
+\vfill
+\begin{mygreenbox}[title=\text{Definition}]
+A Markov chain $(X_n)$ is called (time) \textbf{reversible} if for each $n$
+\begin{align*}
+(X_0, X_1, \hdots, X_n) \stackrel{\mathcal{D}}= (X_n, X_{n-1}, \hdots X_0).
+\end{align*}
+That is, the joint distribution of $(X_0, X_1, \hdots, X_n)$ is the same as the joint distribution of $(X_n, X_{n-1}, \hdots X_0)$.
+\end{mygreenbox}
+
+\end{frame}
+
+
+\begin{frame}{Reversibility as ``local balance''}
+
+\colorbox{yellow!30}{\textbf{Proposition.}} An irreducible Markov chain is reversible if and only the distribution $\+\pi$ of $X_0$ is  stationary and satisfies local balance.
+
+\vfill 
+\pause 
+
+\colorbox{green!30}{\textbf{Justification.}} 
+
+For example,
+\begin{align*}
+P(X_0=i, X_1=j, X_2=k) 
+\onslide<3->{&= [\pi_i p_{ij}] p_{jk}}  \\
+\onslide<4->{&= [\pi_j p_{ji}] p_{jk}  && \scripttext{local balance}}\\
+\onslide<5->{&=  p_{ji} [\pi_j p_{jk}]} \\
+\onslide<6->{&= p_{ji} [\pi_k p_{kj}]  && \scripttext{local balance}} \\ 
+\onslide<7->{&=  \pi_k p_{kj} p_{ji}}  \\
+ \onslide<8->{&= P(X_0=k, X_1=j, X_2=i)}
+\end{align*}
+
+\vfill
+ \onslide<9->{
+\colorbox{red!30}{\textbf{Remark.}} 
+ Notice how local balance allowed the $\pi$ factor to propagate through the product from the left end to the right, reversing the direction of all of the transitions along the way.
+ }
+\end{frame}
+
+\begin{frame}{Ehrenfest model of diffusion}
+
+\begin{tcolorbox}[
+    width=\textwidth,
+    colback=blue!10,
+    colframe=blue!60!black,
+    boxrule=0.8pt,
+    arc=4pt,
+    center title,
+]
+This chain can shed light on perplexing questions like ``Why aren’t people dying all the time due to the air molecules bunching up
+in some odd corner of their bedrooms while they sleep?'' - Joseph Chang
+\end{tcolorbox}
+\pause 
+\begin{center}
+\begin{tikzpicture}[scale=1.1, every node/.style={font=\small}]
+
+% State label
+\node at (0,4.5){\begin{minipage}{4cm}
+\begin{align*}
+N &= \text{number of balls in both urns} \\
+X_t & =  \text{number of balls in Urn A at time $t$} % \qquad (X_n \in \set{0,1,\hdots,m})
+\end{align*}
+\end{minipage}
+};
+\pause 
+
+
+% Urns
+\draw[thick] (-4,0) rectangle (-2,3);
+\draw[thick] (2,0) rectangle (4,3);
+
+\node at (-3,3.4) {Urn A};
+\node at (3,3.4) {Urn B};
+
+% Balls in Urn A
+\foreach \y in {0.5,1.1,1.7} {
+  \fill[red] (-3,\y) circle (0.15);
+}
+
+% Balls in Urn B
+\foreach \y in {0.5,1.1,1.7,2.3} {
+  \fill[red] (3,\y) circle (0.15);
+}
+
+% Arrows showing motion
+\draw[->, thick] (-1.8,1.8) -- (1.8,1.8)
+  node[midway, above] {move to B w.p. $\frac{X_t}{N}$};
+
+\draw[->, thick] (1.8,1.2) -- (-1.8,1.2)
+  node[midway, below] {move to A w.p. $1-\frac{X_t}{N}$};
+
+\end{tikzpicture}
+\end{center}
+	
+\end{frame}
+
+
+\begin{frame}[standout]
+Outline for today's material
+\begin{itemize}
+\item \textbullet \quad Reversibility
+\item \textbullet \quad \alert{Chains with finitely many states}
+\item \textbullet \quad Continuous-time Markov chains
+\end{itemize}
+
+\end{frame}
+
+\begin{frame}{Chains with finitely many states}
+
+The theory of Markov chais is much simplified when the state space is finite.
+
+\pause
+\vfill \vfill 
+
+In particular, we have:
+\vfill 
+\begin{myredbox}[title=\text{Theorem (Perron-Frobenius)(Partial)}]
+Any finite irreducible Markov chain has a unique stationary distribution $\+\pi$.  Furthermore, all components of $\+\pi$ are strictly positive.
+\end{myredbox}
+
+	
+\end{frame}
+
+
+\begin{frame}{The `Page Rank' Markov Chain}
+\begin{center}
+\includegraphics[width=.5\textwidth]{images/page_rank.png}
+\end{center}
+\only<1>{How does Google's patented `Page Rank' algorithm describe the relative popularities of webpages?}
+\only<2>{Webpages form a directed graph with $n$ vertices (representing webpages).  A link from page $i$ to page $j$ is designated by an directed edge.}
+\only<3>{The behavior of a swiftly bored web surfer  can be modeled by a random walk on the directed graph of webpages.}
+\only<4>{With probability $b$, the random walk moves to a randomly linked page from the current page (or to a random page in the graph, if a webpage has no outgoing links).  With probability $1-b$, the random walk moves to a random page in the graph.}
+\only<5>{Let $d_i$ be the out-degree of vertex $i$.}
+\only<6>{Then the transition matrix $\+P = b\+Q + (1-b) \+u^\top\+e$, where  $\+Q=(q_{ij})$ with
+\begin{align*}
+q_{ij} = 
+\begin{cases}
+ 1/d_i, & \text{if $i \to j$} \\
+ 1/n, & \text{if $i$ dangles ($d_i=0$)}\\
+ 0, & \text{otherwise} 
+\end{cases}
+\end{align*}
+where $\+u$ is a row vector with $u_i=1/n$ and $\+e$ is a row vector with entries 1.}
+\end{frame}
+
+
+
+\begin{frame}[standout]
+Outline for today's material
+\begin{itemize}
+\item \textbullet \quad Reversibility
+\item \textbullet \quad Chains with finitely many states
+\item \textbullet \quad \alert{Continuous-time Markov chains}
+\end{itemize}
+
+\end{frame}
+
+\begin{frame}{Continuous Time Markov Chains}
+
+\begin{center}
+\includegraphics[width=.7\textwidth]{images/continuous_time_markov_chain.png}	
+\end{center}
+\vfill
+
+A \alert{continuous time Markov chain} is characterized by
+\begin{enumerate}
+	\item A discrete-time \textbf{jump chain} (with some transition probability matrix).
+	\item A probability distribution over \textbf{holding times} at each state.
+\end{enumerate}
+\pause 
+\vfill 
+\colorbox{blue!30}{\textbf{Examples.}} Traffic light cycles, inventory systems with bulk orders, popcorn popping, customer queues,  website traffic,
+\end{frame}
+
+\begin{frame}{Continuous Time Markov Chains}
+Let $X=\set{X(t): t \geq 0}$ be a family of random variables taking values in a countable state space $S$ and indexed by the half line $[0,\infty)$.
+\vfill 
+\pause 
+\colorbox{yellow!30}{\textbf{Poll.}} How to characterize the Markov property for continuous  chains? 
+\vfill
+\pause 
+%\colorbox{green!30}{\textbf{Definition.}} 
+
+\begin{mygreenbox}[title=Definition] A continuous time chain $X$ satisfies the \textbf{Markov property} if 
+\begin{align*}
+P\big(X(t_n) &=i_n \mid \red{X(t_1)=i_1, X(t_1)=i_2, \hdots,} \, \blue{X(t_{n-1})=i_{n-1}}\big) \\
+&=   P\big(X(t_n)=i_n \mid \blue{X(t_{n-1})=i_{n-1}}\big) 	
+\end{align*}
+
+for any increasing sequence of times $t_1 < t_2 < \hdots < t_n$ and states $i_1, i_2, \hdots i_n$.
+\end{mygreenbox}
+\vfill
+\pause 
+\colorbox{blue!30}{\textbf{Remark.}} For technical reasons, the text restricts consideration to \textit{right continuous} chains -- that is those which have \textit{stepwise} sample paths.
+\end{frame}
+
+
+
+
+\begin{frame}{Example: Poisson Process}
+
+A Poisson process $N(t)$ can be used to model the number of `arrivals` or `occurrences` or `events` by time $t$.
+
+\begin{center}
+\includegraphics[width=.6\textwidth]{images/poisson_process}	
+\end{center}
+\vfill
+
+\only<2>{
+\colorbox{blue!30}{\textbf{Example.}} Emission of particles by a radioactive source.
+}
+
+\only<3-4>{A Poisson process with intensity $\lambda$ has pmf
+\[ P\big(N(\red{t})=j \big) = \frac{(\lambda \red{t})^j}{j!} e^{-\lambda \red{t}}, \qquad j=0,1,2,\hdots \]
+
+}
+\only<4>{ Hence, the expected value is $E[N(t)]=\lambda t$.
+}
+\only<5>{
+\colorbox{green!30}{\textbf{Theorem.}} The \textbf{interarrival times} $U_n=T_{n+1}-T_n$ are independent and exponentially distributed with parameter $\lambda$.
+}
+
+
+\end{frame}
+
+
+\begin{frame}{Popcorn as Poisson Process?}
+
+\colorbox{yellow!30}{\textbf{Poll.}} Can we consider popcorn popping a Poisson process?
+
+\begin{center}
+\includegraphics[width=.25\textwidth]{images/popcorn_popper.png}	
+\end{center}
+
+\pause 
+\colorbox{red!30}{\textbf{Potential issues.}}
+\begin{enumerate}
+	\item \textbf{Non-constant rate.} The expected waiting time $\lambda$ changes over time.  It increases as heat rises, then decreases as kernels run out. \pause 
+	\item \textbf{Finite population.} The number of kernels is limited, so there is not an unbounded number of possible pops.  \pause 
+	\item \textbf{Dependent events.} Although rare, a pop from one kernel could trigger another through physical collision. 
+\end{enumerate}
+
+	
+\end{frame}
+
+
+\begin{frame}{Generalizing the Poisson Process}
+
+\colorbox{yellow!30}{\textbf{Poll.}} A continuous time Markov Chain generalizes the Poisson Process. How?
+\pause 
+\vfill 
+
+\begin{center}
+\includegraphics[width=.57\textwidth]{images/continuous_time_markov_chain.png}	
+\end{center}
+\vfill
+
+A \textbf{continuous time Markov chain} is characterized by
+\begin{enumerate}
+	\item A discrete-time \textbf{jump chain} with \alert{any} transition probability matrix $(p_{ij})$. \pause \red{ \scripttext{(The state doesn't need to go up by one each time.)}}  \pause  
+	\item A probability distribution over \textbf{holding times} at \alert{each} state. \pause \red{ \scripttext{(The waiting time doesn't need to have an identical probability distribution at each state.)}} \pause \blue{\scripttext{(However, each such distribution \textbf{must} be exponential!}} \pause \blue{\scripttext{It is characterized by parameter $g_i$.)}}
+\end{enumerate}
+
+\end{frame}
+
+
+
+
+\begin{frame}{Holding times for a continuous time Markov chain}
+
+ In the group exercises, we show that the holding times in \alert{any} continuous time Markov chain \alert{must} be exponentially distributed! 
+  \vfill \pause 
+  This follows from the following characterization of exponential functions:
+ 
+ \begin{myredbox}[title=\text{Fact from Problem 4.14.5a}]
+ Let $g: [0,\infty) \to [0,\infty)$ be such that $g(s+t)=g(s)g(t)$ for $s,t \geq 0$. If $g$ is monotone, then $g(s)=e^{\mu s}$ for some $\mu$.
+ \end{myredbox}
+  \vfill \pause 
+ 
+ which in turn implies:
+ 	
+\begin{mygreenbox}[title=\text{The only continuous distribution with the ``lack of memory'' property.}]
+The \textbf{exponential distribution} is the only continuous distribution with the `lack of memory` property \[P(X>s+t \mid X>s) = P(X>t).\]
+\end{mygreenbox}
+\end{frame}
+
+
+
+\begin{frame}{Random Groups}
+
+\begin{columns}
+\begin{column}{0.33\textwidth}
+Aubrey Williams: 5 \\ 
+Austin Barton : 3 \\ 
+Blake Sigmundstad: 7 \\ 
+Diego Moylan: 6 \\ 
+Dillon Shaffer: 1 \\ 
+Ismoiljon Muzaffarov: 2 \\ 
+Jacob Tanner: 8 \\\end{column}
+\begin{column}{0.33\textwidth}
+Josh Stoneback: 4 \\ 
+Joshua Bowen: 1 \\ 
+Joshua Culwell: 3 \\ 
+Laura Banaszewski: 1 \\ 
+Lina Hammel: 6 \\ 
+Logan Racz: 2 \\\end{column}
+\begin{column}{0.33\textwidth}
+Matt Hall: 5 \\ 
+Micah Miller: 8 \\ 
+Mike Kadoshnikov: 4 \\ 
+Owen Cool: 2 \\ 
+Racquel Bowen: 4 \\ 
+Samuel Mocabee: 7 \\ 
+Tatiana Kirillova: 3 \\\end{column}
+\end{columns}
+
+\end{frame}
+
+
+\begin{frame}{Group exercises - Problem Set 10}
+\footnotesize 
+\begin{enumerate}
+\item (6.5) \textbf{The Ehrenfest model.} Find the stationary distribution for the Ehrenfest model of diffusion.   (Hint: Rather than solve the equation $\+\pi = \+\pi \+P$, consider that the diffusion model might be reversible in equilibrium.   That is, look for solutions to the detailed balance equation $\pi_i p_{ij} = \pi_j p_{ji}$.)
+\item (6.6.9) \textbf{The `Page Rank' Markov chain.}   Recall the construction of a random walk on the world wide web, whose transition matrix is $\+P = b\+Q + (1-b) \+u^\top\+e$, where  $\+Q=(q_{ij})$ with
+%
+\begin{align*}
+q_{ij} = 
+\begin{cases}
+ 1/d_i, & \text{if $i \to j$} \\
+ 1/n, & \text{if $i$ dangles ($d_i=0$)}\\
+ 0, & \text{otherwise} 
+\end{cases}
+\end{align*}
+%
+where $n$ is the number of webpages, $d_i$ is the outgoing degree of the $i$-th webpage, $\+u$ is a row vector with $u_i=1/n$, and $\+e$ is a row vector of 1's. 
+\begin{itemize}
+\footnotesize  
+\item[a)] Deduce that the stationary distribution $\+\pi$ is given by  $\+\pi=\set{(1-b)/n} \+e (\+I - b \+Q)^{-1},$ where $\+I$ is the identity matrix.
+\item[b)] Explain why the elements of $\+\pi$, when re-arranged in decreasing order, supply a description of the relative popularities of webpages.
+\end{itemize} 
+\item (6.9) \textbf{Holding times.} Let $X$ be a continuous time Markov chain.  Let $X(0)=i$, and $U_0=\inf\set{t: X(t)\neq i}$ be the time of the first change in value.  Show that $U_0$ has the exponential distribution. %(Hint: Use this result from 4.14.5a:  Let $g: [0,\infty) \to [0,\infty)$ be such that $g(s+t)=g(s)g(t)$ for $s,t \geq 0$. If $g$ is monotone, then $g(s)=e^{\mu s}$ for some $\mu$.)
+\end{enumerate}   
+\end{frame}
+
+
+\end{document}

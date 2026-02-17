@@ -163,9 +163,9 @@ where $\+\pi$ is a row vector and $\+P$ is the transition probability matrix of 
 
 \begin{frame}{Reversibility as ``local balance''}
 
-\begin{myredbox}[title=``Local balance'': a stronger condition than reversibility]
+\begin{myredbox}[title=``Local balance'': a stronger condition than global balance]
 \begin{align*}
-\explaintermbrace{total flow from $j$ to $j$}{\pi_j P_{ji}} = \explaintermbrace{total flow from $i$ to $j$}{\pi_i P_{ij}} \\
+\explaintermbrace{total flow from $j$ to $i$}{\pi_j P_{ji}} = \explaintermbrace{total flow from $i$ to $j$}{\pi_i P_{ij}} \\
 \end{align*}
 \end{myredbox}
 \pause 
@@ -376,7 +376,7 @@ for any increasing sequence of times $t_1 < t_2 < \hdots < t_n$ and states $i_1,
 A Poisson process $N(t)$ can be used to model the number of `arrivals` or `occurrences` or `events` by time $t$.
 
 \begin{center}
-\includegraphics[width=.6\textwidth]{images/poisson_process}	
+\includegraphics[width=.5\textwidth]{images/poisson_process}	
 \end{center}
 \vfill
 
@@ -388,7 +388,7 @@ A Poisson process $N(t)$ can be used to model the number of `arrivals` or `occur
 \[ P\big(N(\red{t})=j \big) = \frac{(\lambda \red{t})^j}{j!} e^{-\lambda \red{t}}, \qquad j=0,1,2,\hdots \]
 
 }
-\only<4>{ Hence, the expected value is $E[N(t)]=\lambda t$.
+\only<4>{ Hence, the expected value is $E[N(t)]=\lambda \red{t}$.
 }
 \only<5>{
 \colorbox{green!30}{\textbf{Theorem.}} The \textbf{interarrival times} $U_n=T_{n+1}-T_n$ are independent and exponentially distributed with parameter $\lambda$.
@@ -453,8 +453,8 @@ A \textbf{continuous time Markov chain} is characterized by
  
  which in turn implies:
  	
-\begin{mygreenbox}[title=\text{The only continuous distribution with the ``lack of memory'' property.}]
-The \textbf{exponential distribution} is the only continuous distribution with the `lack of memory` property \[P(X>s+t \mid X>s) = P(X>t).\]
+\begin{mygreenbox}[title=[title=\text{Fact from Problem 4.14.5b.}]
+The \textbf{exponential distribution} is the \alert{only} continuous distribution with the `lack of memory` property \[P(X>s+t \mid X>s) = P(X>t).\]
 \end{mygreenbox}
 \end{frame}
 

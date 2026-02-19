@@ -1,0 +1,271 @@
+\documentclass[10pt]{beamer}
+
+
+
+%%%
+% PREAMBLE FOR THIS DOC 
+%%%
+%https://tex.stackexchange.com/questions/68821/is-it-possible-to-create-a-latex-preamble-header
+\usepackage{/Users/miw267/Repos/csci246_spring2025/slides/preambles/beamer_preamble_for_CSCI246}
+
+\usepackage{wrapfig}  
+
+
+%%% TRY TO RESHOW TOC AT EACH SECTION START (with current section highlighted)
+% Reference: https://tex.stackexchange.com/questions/280436/how-to-highlight-a-specific-section-in-beamer-toc
+\newcommand\tocforsect[2]{%
+  \begingroup
+  \edef\safesection{\thesection}
+  \setcounter{section}{#1}
+  \tableofcontents[#2,currentsection]
+  \setcounter{section}{\safesection}
+  \endgroup
+}
+
+
+\usepackage[normalem]{ulem} % for strikeout (\sout)
+
+%%%% HERES HOW TO DO IT CORRECTLY
+% FIRST IN .STY FILE, DO
+%\usetheme[sectionpage=none]{metropolis}
+% THEN AT EACH SECTION DO
+%\begin{frame}{Outline}
+%  \tableofcontents[currentsection]	
+%\end{frame}
+
+
+
+%\setbeamertemplate{navigation symbols}{}
+%\setbeamertemplate{footline}[frame number]{}
+
+
+%%%
+% DOCUMENT
+%%%
+
+\begin{document}
+
+%\maketitle
+
+%% Title page frame
+%\begin{frame}
+%    \titlepage 
+%\end{frame}
+
+
+
+\title{02/19/2026: Brownian Motion}
+\author{CSCI 546: Diffusion Models}
+\date{Textbook reference: Chang Sec 5.1-5.6, GS Sec  8.1, 8.5}
+
+\begin{frame}
+    \titlepage 
+\end{frame}
+
+\begin{frame}
+
+\begin{mygreenbox}[title=Announcement (Sign-in Sheet)]
+Please sign the sign-in sheet.
+\end{mygreenbox}
+
+\vfill 
+\pause 
+ 
+\begin{myredbox}[title=\text{Personal Note}]
+\begin{center}
+\includegraphics[width=.5\textwidth]{images/compton.png}	
+\end{center}
+
+\end{myredbox}
+
+\end{frame}
+
+\begin{frame}[standout]
+Review Problem Set \#10
+\end{frame}
+
+\begin{frame}[standout]
+Concepts for Problem Set \#11
+\end{frame}
+
+%
+%\begin{frame}[standout]
+%Outline for today's material
+%\begin{itemize}
+%\item \textbullet \quad \alert{Reversibility}
+%\item \textbullet \quad Chains with finitely many states
+%\item \textbullet \quad Continuous-time Markov chains
+%\end{itemize}
+%
+%\end{frame}
+
+
+\begin{frame}{Stochastic Process}
+
+\begin{center}
+\includegraphics[width=.67\textwidth]{images/brownian_motion_paths.png}
+\end{center}	
+
+\colorbox{blue!30}{\textbf{Definition.}} A \textbf{stochastic process} $\set{X(t): t \in \R}$ is a function $X: \R \times \Omega \to \R$. Thus, we can view $X=X(t,\omega)$ in two ways:
+\begin{itemize}
+\item \textit{As a collection of random variables.} For each fixed $t$, $X(t, \cdot)$ is a random variable.
+\item \textit{As a random function.} For each fixed $\omega$, $X(\cdot, \omega)$ is a real-valued function (or ``path'').
+\end{itemize} 
+
+\end{frame}
+
+
+
+\begin{frame}{Brownian Motion}
+
+\begin{center}
+\includegraphics[width=.6\textwidth]{images/brownian_motion_paths.png}
+\end{center}	
+
+\colorbox{blue!30}{\textbf{Definition.}} A \textbf{standard Brownian motion} $\set{B(t): t \geq 0}$ is a stochastic process having
+\begin{itemize}
+\item[(i)] continuous paths,
+\item[(ii)] stationary, independent increments, and
+\item[(iii)] $B(t) \sim N(0,t)$ for all $t \geq 0$.
+\end{itemize} 
+
+\only<2>{\colorbox{yellow!30}{\textbf{Poll.}} What does ``stationary, independent increments'' mean?}
+
+\only<3-4>{\colorbox{yellow!30}{\textbf{Remark.}} A general  $(\mu, \sigma^2)$  Brownian motion has mean and variance increasing at rate $\mu$ and $\sigma^2$ per unit time:} \only<4>{$X(t)=X(0)+\mu t + \sigma B(t).$}
+
+\end{frame}
+
+\begin{frame}{Is Brownian Motion a Gaussian Process?}
+\small 
+\colorbox{blue!30}{\textbf{Definition.}} A \textbf{Gaussian process} $\set{X(t): t \geq 0}$ is a stochastic process such that for all numbers $n=1,2,\hdots$ and all times $t_1, t_2, \hdots t_n$, the random vector $\big( X(t_1), X(t_2), \hdots, X(t_n) \big)$ has a joint normal distribution.
+\vfill 
+\only<2-7>{\colorbox{yellow!30}{\textbf{Poll.}} Is Brownian motion a Gaussian process? Why?}
+\vfill 
+\begin{columns}[T]  % T = align at top
+
+% ---------- LEFT: TEXT ----------
+\begin{column}{0.7\textwidth}
+
+\only<3-6>{
+\colorbox{red!30}{\textbf{Warning.}}
+\textbf{Gaussian marginals do not imply a jointly Gaussian distribution.}
+} \only<4-6>{For instance, let
+\begin{itemize}
+  \item $Z \sim \mathcal N(0,1)$,
+  \item $\varepsilon$ be independent of $Z$, with
+        $P(\varepsilon=1)=P(\varepsilon=-1)=\half$,
+  \item $X := Z, \qquad Y := \varepsilon Z$.
+\end{itemize}
+}
+
+\only<5-6>{
+\textbf{Both marginals are Gaussian:}
+\begin{itemize}
+  \item $X \sim \mathcal N(0,1)$,
+  \item Since $\varepsilon$ just flips the sign,
+        $Y \stackrel{d}{=} Z \sim \mathcal N(0,1)$.
+\end{itemize}
+}
+
+\only<6>{
+\textbf{But the joint is not Gaussian:}
+\begin{itemize}
+  \item $(X,Y)$ lives on the two lines $y=x$ and $y=-x$.
+\end{itemize}
+}
+
+\end{column}
+
+% ---------- RIGHT: PICTURE ----------
+\begin{column}{0.45\textwidth}
+\only<4-6>{
+\centering
+\includegraphics[width=\textwidth]{images/gaussian_marginals_doesnt_imply_jointly_gaussian.png}
+}
+\end{column}
+
+\end{columns}
+
+\only<7-8>{
+\colorbox{green!30}{\textbf{Solution.}} Yes!
+}
+
+\only<8->{
+Sketch of argument:
+\begin{itemize}
+  \item<8-> The increments $\Delta_i = X(t_i) - X(t_{i-1})$ are all Gaussian.
+  \item<9-> Since the $\Delta_i$’s are also independent, the vector of increments
+  \[
+    \Delta := (\Delta_1, \ldots, \Delta_n)
+  \]
+  is jointly Gaussian.
+  \item<10-> We can write
+  \[
+    (X(t_1), X(t_2), \ldots, X(t_n)) = A \Delta
+  \]
+  for some matrix $A$, i.e.\ as a linear transformation of $\Delta$.
+  Linear transformations of multivariate Gaussians are multivariate Gaussians.
+\end{itemize}
+}
+\end{frame}
+
+\begin{frame}{Gaussian Processes}
+\begin{center}
+\includegraphics[width=\textwidth]{images/gps_with_different_covariances.png} \\
+\textbf{Different covariance functions give different types of GPs.}
+\end{center}
+
+\end{frame}
+
+
+\begin{frame}{Brownian Motion as a Gaussian Process}
+
+\colorbox{green!30}{\textbf{Fact (from Chang).}} A Gaussian process having continuous paths, mean 0, and covariance function $r(s,t)=s \wedge t$ is a standard Brownian motion.
+\vfill
+\pause 
+\colorbox{red!30}{\textbf{Notation.}} $s \wedge t = \min(s,t)$.
+\end{frame}
+
+
+\begin{frame}{Random Groups}
+
+\begin{columns}
+\begin{column}{0.33\textwidth}
+Aubrey Williams: 6 \\ 
+Austin Barton : 2 \\ 
+Blake Sigmundstad: 4 \\ 
+Diego Moylan: 5 \\ 
+Dillon Shaffer: 3 \\ 
+Ismoiljon Muzaffarov: 3 \\ 
+Jacob Tanner: 1 \\\end{column}
+\begin{column}{0.33\textwidth}
+Josh Stoneback: 1 \\ 
+Joshua Bowen: 1 \\ 
+Joshua Culwell: 5 \\ 
+Laura Banaszewski: 3 \\ 
+Lina Hammel: 4 \\ 
+Logan Racz: 6 \\\end{column}
+\begin{column}{0.33\textwidth}
+Matt Hall: 2 \\ 
+Micah Miller: 4 \\ 
+Mike Kadoshnikov: 7 \\ 
+Owen Cool: 2 \\ 
+Racquel Bowen: 8 \\ 
+Samuel Mocabee: 8 \\ 
+Tatiana Kirillova: 7 \\\end{column}
+\end{columns}
+\end{frame}
+
+
+
+\begin{frame}{Group exercises - Problem Set 11}
+\begin{enumerate}
+\item (Chang Exercise 5.5) \textbf{Brownian Motion keeps ``restarting'', and is Markov.} Suppose that $W$ is standard Brownian motion, and let $c>0$.  Define $X(t)=W(c+t)-W(c)$. Then $\set{X(t): t \geq 0}$ is a standard Brownian motion that is independent of $\set{W(t): 0 \leq t \leq c}$.
+\item (Chang Sec 5.1) \textbf{Covariance of Brownian Motion.}  Prove that for Brownian motion, $\Cov(W_s, W_t) = s \wedge t.$ (Recall the notation that $s \wedge t := \min(s,t)$).
+\item (GS 8.6.5) Let $W$ be standard Brownian motion. Which of the following are also standard Brownian motions?
+\[ (a) \, -W(t), \qquad (b) \, \sqrt{t} W(1), \qquad (c) \, t W(1/t).\]
+\end{enumerate}   
+\end{frame}
+
+
+\end{document}

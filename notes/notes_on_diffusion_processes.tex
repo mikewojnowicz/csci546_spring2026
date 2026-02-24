@@ -1,0 +1,197 @@
+\documentclass{article} % For LaTeX2e
+
+
+%%%
+% STANDARD PREAMBLE
+%%%
+%https://tex.stackexchange.com/questions/68821/is-it-possible-to-create-a-latex-preamble-header
+\usepackage{/Users/miw267/Repos/latex_preamble/preamble}
+
+
+%%%
+% SPECIAL TO THIS DOC
+%%%
+
+\usepackage{amsthm}
+\usepackage{tcolorbox}
+\tcbuselibrary{theorems}
+
+% Colored theorems
+\let\theorem\relax
+\let\endtheorem\relax
+\newtcbtheorem[number within=section]{theorem}{Theorem}
+{colback=blue!5,
+ colframe=blue!70!black,
+ fonttitle=\bfseries}{thm}
+ 
+ %%%
+ % START DOC
+ %%%
+ 
+\title{Diffusion Processes: Notes}
+%\author{Mike Wojnowicz}
+
+
+\begin{document}
+
+\maketitle
+
+\begin{abstract}
+These notes largely follow \citet[Chapter 6]{chang2007stochastic}.
+
+\end{abstract}
+
+\section{Kolmogorov Backward Equation}
+
+\subsection{Claim} \label{sec:claim}
+
+Let $X_t$ be a one-dimensional diffusion process with infinitesimal mean (a.k.a drift coefficient) $\mu(X_t)$ and infinitesimal variance (a.k.a diffusion coefficient) $\sigma^2(X_t)$. Let $V(X_t)$ be some test function (which we interpret as the \qq{value}) of the state at time $t$.   Define the expected value at some terminal time $T$ given   current state $x$ at current time $t$  by:
+\[ u(t,x) \defeq \E[V(X_T) \mid X_t = x]. \]
+Then this function $u(t,x)$ satisfies the \textbf{Kolmogorov Backward Equation}:
+ \[ 0 = u_t + u_x \mu(x) + \half u_{xx} \sigma^2(x).  \]
+The boundary condition is given by $u(T,x)=V(x)$.
+\subsection{Remarks}
+
+
+
+Why is this claim interesting?  
+
+\begin{enumerate}
+	\item \textit{It is the foundation of option pricing.} In the case of geometric Brownian motion, the backward equation becomes the Black–Scholes PDE.  That is, pricing a derivative is done by solving a backward equation.	
+\item \textit{We can use it to find the probability density at any time.}  As a corollary to the claim, the same backward equation holds when $u(t,x)$ is interpreted in terms of the transition density.  Using this, we can find probability density $p(t,x)$ at every time $t>0$.	This highlights an important property of diffusion processes:
+
+\fbox{%
+\begin{minipage}{0.9\linewidth}
+\begin{center}
+	The drift $\mu(x)$ and diffusion $\sigma^2(x)$ coefficients uniquely determine the probability density $p(t,x)$ at every time $t>0$.
+\end{center}
+\end{minipage}%
+}
+	
+
+
+
+
+%As a corollary, the same backward equation holds when $u(t,x)$ is interpreted in terms of the transition density.
+
+%\[ f(t',y \mid t,x) = \frac{\partial}{\partial y} P\bigg(X(t') \leq y \mid X(t)=x \bigg) \]
+ %So we only need the drift and diffusion coefficients $\big(\mu(x),\sigma^2\big(x))$ to determine the density $f$.  Moreover, we solve this deterministically (via a PDE) rather than requiring any stochastic simulation.
+\end{enumerate}
+
+
+Why is this called the \qq{backward equation}?
+
+\begin{enumerate}
+\item The PDE runs backward in time from $T$ to earlier times $t$.   (Note that it differentiates with respect to the \textit{starting} time $t$.)
+\end{enumerate}
+
+
+\subsection{Heuristic Justification of Claim~\ref{sec:claim}.}
+
+\textbf{Step 1. Consider discretized diffusion}
+ 
+
+Let $\Delta X = X_{t + \Delta t} - X_t$ be a small change in the diffusion process. Then per \citet[pp.180]{chang2007stochastic}, we have
+%
+\begin{align}
+ \Delta X = \mu(X_t) \Delta t + \sigma(X_t) \, \sqrt{\Delta t} \, Z  \qquad Z, \sim N(0,1)
+ \label{eqn:discretized_diffusion}
+\end{align}
+
+Note in particular that, as given in \citet[Eqn. 6.2 and Exercise 6.4]{chang2007stochastic}, we have
+\begin{subequations}
+\begin{align}
+\E[\Delta X \mid X(t)=x] = \mu(x) \Delta t + o(\Delta t) \label{eqn:expected_delta_x}\\	
+\E[(\Delta X)^2 \mid X(t)=x] = \sigma^2(x) \Delta t + o(\Delta t) \label{eqn:expected_delta_x_squared} 
+\end{align}
+as $\Delta t \downarrow 0$.  (Exercise: defend these equations.)
+\end{subequations}
+
+
+
+
+\textbf{Step 2. Use the Law of Iterated Expectation}
+ 
+We have 
+%
+\begin{align*}
+u(t,x) &= \E[V(X_T) \mid X_t=x] && \scripttext{(definition)} \\
+&= \E\big[\E[V(X_T) \mid X_t=x, X_{t+\Delta t}] \mid X_t = x\big] && \scripttext{(LIE)} \\
+&= \E\big[\E[V(X_T) \mid \cancel{X_t=x}, X_{t+\Delta t}] \mid X_t = x\big] && \scripttext{(Markov property)} \\
+&= \E \big[u( t+ \Delta t, X_{t+\Delta t}) \mid X_t = x\big] && \scripttext{(definition)} \\
+\labelit\label{eqn:expected_value}
+\end{align*}
+
+\fbox{%
+\begin{minipage}{0.9\linewidth}
+\begin{center}
+Note: This equation is \underline{dynamic programming}, expressing the fact that
+
+\begin{quote}
+Starting now is equivalent to starting an instant later and averaging over the random step in between.	
+\end{quote}
+\end{center}
+\end{minipage}
+
+}
+
+\textbf{Step 3. Form 2nd-order Taylor series expansion}
+
+We have 
+%
+\begin{align*}
+u(t+ \Delta t, X_{t+\Delta t}) & = u(t,x)  + u_x(t,x) \Delta X + u_t(t,x) \Delta t + \half u_{xx}(t,x) (\Delta X)^2+ o(\Delta t),  
+\end{align*}
+%
+where $o(\Delta t)$ absorbs the other second-order terms $\half u_{tt}(\Delta t)^2$ and $u_{tx}(\Delta t \Delta X)$. 
+
+\vspace{1cm}
+
+{\footnotesize
+\begin{itemize}
+\item \underline{Details:} Here are some details on why $o(\Delta t)$ absorbs the second-order term $u_{tx}(\Delta t \Delta X)$. First note from \Eqref{eqn:discretized_diffusion}  that over a small time interval 
+$\Delta t$, the typical size of the change in $X$ is proportional to $\sqrt{\Delta t}$.  In particular, we have
+%
+\begin{align}
+ \Delta X = O_p(\sqrt{\Delta t}) 
+\label{eqn:space_increment_scales_quadratically_in_time_increments}	
+\end{align}
+%
+which means that $\frac{\Delta X}{\sqrt{\Delta t}}$ is bounded in probability as $\Delta t \downarrow 0$. This is known as the \qq{quadratic variation} property of diffusion.
+
+
+Now multiply the orders:
+
+\[ \Delta t \Delta X = \Delta t O_p(\sqrt{\Delta t}) = O_p(\Delta t^{3/2}).\]
+
+Now since
+\[ \frac{\Delta t^{3/2}}{\Delta t} = \Delta t^{1/2} \to 0, \]
+
+we may conclude
+\[ \Delta t \Delta X =o_p(\Delta t), \]
+since multiplying by the bounded coefficient does not change the order.  Note that $o_p$ refers to \qq{little-o in probability}.  In these notes, we write $o_p$ as $o$, as we simply want to give the gist.
+\end{itemize}
+}
+
+\textbf{Step 4. Substitute}
+
+Now we substitute the Taylor series expansion (Step 3)  into the RHS of \Eqref{eqn:expected_value}:
+%
+\begin{align*}
+\E \big[&u( t+ \Delta t, X_{t+\Delta t}) \mid X_t = x\big] \\
+&= \E \big[ u(t,x)  + u_t(t,x) \Delta t + u_x(t,x) \Delta X + \half u_{xx}(t,x) (\Delta X)^2+ o(\Delta t)  \mid X_t = x\big] + o(\Delta t) && \scripttext{(substitution)} \\
+&= u(t,x)  + u_t(t,x) \Delta t  + u_x(t,x) \E[\Delta X \mid X_t = x] + \half u_{xx}(t,x) \E[(\Delta X)^2 \mid X_t = x] + o(\Delta t) && \scripttext{(linearity)}  \\
+&= u(t,x)  + u_x(t,x)  + u_t(t,x) \Delta t + \mu(x) \Delta t +  \half u_{xx}(t,x) \sigma^2(x)\Delta t + o(\Delta t) && \scripttext{(Eqs.\ref{eqn:expected_delta_x},\ref{eqn:expected_delta_x_squared})} \\
+&= u(t,x)  + \bigg(u_t(t,x) + u_x(t,x) \mu(x) + \half u_{xx}(t,x) \sigma^2(x) \bigg) \Delta t+  o(\Delta t) && \scripttext{(associative prop.)}  
+\end{align*}
+%
+Now using this within  \Eqref{eqn:expected_value}, we subtract $u(t,x)$ from both sides, divide both sides by $\Delta t$, and take the limit as $\Delta t$ goes to 0 to obtain the result.
+
+
+
+\bibliography{references}{}
+\bibliographystyle{apalike}
+
+\end{document}
+
+

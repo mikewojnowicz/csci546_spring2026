@@ -129,6 +129,12 @@ whenever these expectations exist.  %If $X$ and $Y$ have the exponential distrib
 	\item (Chang Sec 5.1) \textbf{Covariance of Brownian Motion.}  Prove that for standard Brownian motion, $\Cov(W_s, W_t) = s \wedge t.$ (Recall the notation that $s \wedge t := \min(s,t)$).
 \item (Chang Sec 5.6) \textbf{Brownian Bridge.}  Verify that the below is an easy way to manufacture a Brownian bridge from standard Brownian motion:
 	\[ X(t) = W(t)-t W(1), \qquad \text{for } 0 \leq t \leq 1.\]
+\item (Gautam Iyer, \textit{\href{https://www.math.cmu.edu/~gautam/sj/teaching/2021-22/944-scalc-finance1/pdfs/ch3-int.pdf}{\underline{\blue{Stochastic Integration. (Lecture notes.)}}}}) \textbf{Total Variation of Brownian Motion.} Let $W$ be Brownian motion, and let $\Delta W_{k,n}$ denote the increment 
+	\[ \Delta W_{k,n} = W \bigg( \frac{kt}{n} \bigg) -  W \bigg( \frac{(k-1)t}{n} \bigg)\] 
+	over the $k$-th bin of a partition $P = \set{0 = t_0 < t_1 < \hdots < t_n = t}$ of the interval $[0,t]$.    Let $T_n = \sum_{k=1}^{n} |\Delta W_{k,n}|$.  Compute $\lim_{n \to \infty} \E[T_n]$.  
+	\item (Chang Sec 6.7) \textbf{Quadratic variation of Brownian motion.} Let $W$ be Brownian motion, and let $\Delta W_{k,n}$ denote the increment 
+	\[ \Delta W_{k,n} = W \bigg( \frac{kt}{n} \bigg) -  W \bigg( \frac{(k-1)t}{n} \bigg)\] 
+	over the $k$-th bin of a partition $P = \set{0 = t_0 < t_1 < \hdots < t_n = t}$ of the interval $[0,t]$.  Let $Q_n = \sum_{k=1}^{n} (\Delta W_{k,n})^2$.  Compute $\lim_{n \to \infty} \E[Q_n]$.
 \end{enumerate}
 
 \appendix

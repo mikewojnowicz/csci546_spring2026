@@ -255,7 +255,7 @@ Similarly, the difficulty with (and solution to) integrating $\int f(t) \,dW(t)$
 
 \begin{frame}{Total variation of a function}
 \begin{center}
-First, form a \textbf{dyadic partition} of $[0,t]$ by chopping it into $2^n$ bins. 
+First, form a \textbf{partition} of $[0,t]$ by chopping it into $n$ bins. 
 
 \begin{tikzpicture}[scale=0.8]
 
@@ -324,8 +324,8 @@ First, form a \textbf{dyadic partition} of $[0,t]$ by chopping it into $2^n$ bin
 % \draw[red,dashed] (\xright,0) -- (Yright);
 
 % Label partition points
-\node[below, yshift=-4mm, xshift=-1mm] at (\xleft,0) {\large $\frac{(k-1)t}{2^n}$};
-\node[below, yshift=-4mm, xshift=+1mm] at (\xright,0) {\large $\frac{kt}{2^n}$};
+\node[below, yshift=-4mm, xshift=-1mm] at (\xleft,0) {\large $\frac{(k-1)t}{n}$};
+\node[below, yshift=-4mm, xshift=+1mm] at (\xright,0) {\large $\frac{kt}{n}$};
 
 \end{tikzpicture}
 \vfill 
@@ -333,7 +333,7 @@ First, form a \textbf{dyadic partition} of $[0,t]$ by chopping it into $2^n$ bin
 
 \alert{Total variation over a partition}:
 \[
-T_n = \sum_{k=1}^{2^n} |\Delta W_{k,n}|
+T_n = \sum_{k=1}^{n} |\Delta W_{k,n}|
 \]
 
 
@@ -349,7 +349,7 @@ T_n = \sum_{k=1}^{2^n} |\Delta W_{k,n}|
 
 
 \begin{mygreenbox}[title=Theorem]
-Standard Brownian motion has infinite total variation over any interval $[0,T]$ where $T>0$. 
+Let $T$ be the total variation of standard Brownian motion over any interval $[0,t]$ where $t>0$. Then $T=\infty$ with probability 1. 
 \end{mygreenbox}
 
 \vfill 
@@ -419,7 +419,7 @@ If we can't use normal tools to integrate $\int f(t) \,dW(t)$, what should we do
 
 \begin{frame}{Quadratic variation of a function}
 \begin{center}
-First, form a \textbf{dyadic partition} of $[0,t]$ by chopping it into $2^n$ bins. 
+First, form a \textbf{partition} of $[0,t]$ by chopping it into $n$ bins. 
 
 \begin{tikzpicture}[scale=0.8]
 
@@ -488,8 +488,8 @@ First, form a \textbf{dyadic partition} of $[0,t]$ by chopping it into $2^n$ bin
 % \draw[red,dashed] (\xright,0) -- (Yright);
 
 % Label partition points
-\node[below, yshift=-4mm, xshift=-1mm] at (\xleft,0) {\large $\frac{(k-1)t}{2^n}$};
-\node[below, yshift=-4mm, xshift=+1mm] at (\xright,0) {\large $\frac{kt}{2^n}$};
+\node[below, yshift=-4mm, xshift=-1mm] at (\xleft,0) {\large $\frac{(k-1)t}{n}$};
+\node[below, yshift=-4mm, xshift=+1mm] at (\xright,0) {\large $\frac{kt}{n}$};
 
 \end{tikzpicture}
 \vfill 
@@ -497,7 +497,7 @@ First, form a \textbf{dyadic partition} of $[0,t]$ by chopping it into $2^n$ bin
 
 \alert{Quadratic variation over a partition}:
 \[
-Q_n = \sum_{k=1}^{2^n} (\Delta W_{k,n})^2
+Q_n = \sum_{k=1}^{n} (\Delta W_{k,n})^2
 \]
 
 
@@ -633,13 +633,29 @@ Tatiana Kirillova: 7 \\\end{column}
 
 
 
-\begin{frame}{Group exercises - Problem Set 12}
-\footnotesize  
+\begin{frame}{Group exercises - Problem Set 13}
+\footnotesize 
+
+\begin{mygreenbox}[title=Theorem (Gautam Iyer)]
+Let $T$ be the total variation of standard Brownian motion over any interval $[0,t]$ where $t>0$. Then $T=\infty$ with probability 1. 
+\end{mygreenbox}
+
+\begin{mygreenbox}[title=Theorem (Chang 6.7)]
+Let $Q$ be the quadratic variation of standard Brownian motion over interval $[0,t]$. Then $Q=t$ with probability 1. 
+\end{mygreenbox}
+
+The exercises are related to the theorems above. For both exercises, let $W$ be Brownian motion, and let $\Delta W_{k,n}$ denote the increment 
+	\[ \Delta W_{k,n} = W \bigg( \frac{kt}{n} \bigg) -  W \bigg( \frac{(k-1)t}{n} \bigg)\] 
+	over the $k$-th bin of a partition $P = \set{0 = t_0 < t_1 < \hdots < t_n = t}$ of the interval $[0,t]$. 
+
+
 \begin{enumerate}
-	\item (Chang Sec 6.7) \textbf{Quadratic variation of Brownian motion.}. Let $W$ be Brownian motion, and let $\Delta W_{k,n}$ denote the increment 
-	\[ \Delta W_{k,n} = W \bigg( \frac{kt}{2^n} \bigg) -  W \bigg( \frac{(k-1)t}{2^n} \bigg)\]  
-and let $Q_n = \sum_{k=1}^{2^n} (\Delta W_{k,n})^2$.  Compute $\E[Q_n]$ and $\Var[Q_n]$.
+	\item (Gautam Iyer, \textit{\href{https://www.math.cmu.edu/~gautam/sj/teaching/2021-22/944-scalc-finance1/pdfs/ch3-int.pdf}{\underline{\blue{Stochastic Integration. (Lecture notes.)}}}}) \textbf{Total Variation of Brownian Motion.}   Let $T_n = \sum_{k=1}^{n} |\Delta W_{k,n}|$.  Compute $\lim_{n \to \infty} \E[T_n]$.  
+	\item (Chang Sec 6.7) \textbf{Quadratic variation of Brownian motion.} Let $Q_n = \sum_{k=1}^{n} (\Delta W_{k,n})^2$.  Compute $\lim_{n \to \infty} \E[Q_n]$.
+
 \end{enumerate}
+
+
 
 
 \end{frame}

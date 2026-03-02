@@ -37,7 +37,7 @@
 \maketitle
 
 \begin{abstract}
-This midterm study guide is a \textbf{work in progress}.  In particular: (1)  Additional problems relevant to diffusion processes will be added soon. (2) The reference material is a work in progress.
+Note: the reference material is a work in progress.
 \end{abstract}
 
 
@@ -129,12 +129,27 @@ whenever these expectations exist.  %If $X$ and $Y$ have the exponential distrib
 	\item (Chang Sec 5.1) \textbf{Covariance of Brownian Motion.}  Prove that for standard Brownian motion, $\Cov(W_s, W_t) = s \wedge t.$ (Recall the notation that $s \wedge t := \min(s,t)$).
 \item (Chang Sec 5.6) \textbf{Brownian Bridge.}  Verify that the below is an easy way to manufacture a Brownian bridge from standard Brownian motion:
 	\[ X(t) = W(t)-t W(1), \qquad \text{for } 0 \leq t \leq 1.\]
+\item (Chang Sec 6.1) \textbf{Discretized Diffusion.} Let $\Delta X = X_{t + \Delta t} - X_t$ be a small change in the diffusion process. Then per Chang pp.180, we have
+	\begin{align*}
+	 \Delta X = \mu(X_t) \Delta t + \sigma(X_t) \, \sqrt{\Delta t} \, Z  \qquad Z, \sim N(0,1)
+	\end{align*}
+	%
+	Show that as $\Delta t \downarrow 0$.
+	\begin{align*}
+	\E[\Delta X \mid X(t)=x] = \mu(x) \Delta t + o(\Delta t)\\	
+	\E[(\Delta X)^2 \mid X(t)=x] = \sigma^2(x) \Delta t + o(\Delta t)
+	\end{align*}
 \item (Gautam Iyer, \textit{\href{https://www.math.cmu.edu/~gautam/sj/teaching/2021-22/944-scalc-finance1/pdfs/ch3-int.pdf}{\underline{\blue{Stochastic Integration. (Lecture notes.)}}}}) \textbf{Total Variation of Brownian Motion.} Let $W$ be Brownian motion, and let $\Delta W_{k,n}$ denote the increment 
 	\[ \Delta W_{k,n} = W \bigg( \frac{kt}{n} \bigg) -  W \bigg( \frac{(k-1)t}{n} \bigg)\] 
-	over the $k$-th bin of a partition $P = \set{0 = t_0 < t_1 < \hdots < t_n = t}$ of the interval $[0,t]$.    Let $T_n = \sum_{k=1}^{n} |\Delta W_{k,n}|$.  Compute $\lim_{n \to \infty} \E[T_n]$.  
+	over the $k$-th bin $(k=1, \hdots, n)$ of the uniform partition of $[0,t]$ with mesh size $\Delta t=\frac{t}{n}$.    Let $T_n = \sum_{k=1}^{n} |\Delta W_{k,n}|$.  Compute $\lim_{n \to \infty} \E[T_n]$.  
 	\item (Chang Sec 6.7) \textbf{Quadratic variation of Brownian motion.} Let $W$ be Brownian motion, and let $\Delta W_{k,n}$ denote the increment 
 	\[ \Delta W_{k,n} = W \bigg( \frac{kt}{n} \bigg) -  W \bigg( \frac{(k-1)t}{n} \bigg)\] 
-	over the $k$-th bin of a partition $P = \set{0 = t_0 < t_1 < \hdots < t_n = t}$ of the interval $[0,t]$.  Let $Q_n = \sum_{k=1}^{n} (\Delta W_{k,n})^2$.  Compute $\lim_{n \to \infty} \E[Q_n]$.
+	over the $k$-th bin $(k=1, \hdots, n)$ of the uniform partition of $[0,t]$ with mesh size $\Delta t=\frac{t}{n}$.  Let $Q_n = \sum_{k=1}^{n} (\Delta W_{k,n})^2$.  Compute $\lim_{n \to \infty} \E[Q_n]$.
+\item (Chang Sec 6.9) \textbf{Geometric Brownian motion.} Let $X_t$ be a stochastic process governed by the It\^{o} SDE 
+	\[dX_t = \mu dt + \sigma dW_t.\]  
+	Define a new stochastic process by $Y_t = e^{X_t}.$ Use It\^{o} chain rule (also called It\^{o}'s Lemma) to show that $Y_t$ is a geometric Brownian motion, and find the infinitesimal parameters of $Y_t$ with respect to the infinitesimal parameters of $X_t$. Provide an interpretation of the infinitesimal parameters.
+\item (Gautam Iyer, \textit{\href{https://www.math.cmu.edu/~gautam/sj/teaching/2021-22/944-scalc-finance1/pdfs/ch3-int.pdf}{\underline{\blue{Stochastic Integration. (Lecture notes.)}}}}, Exercise 6.1.) \textbf{Integrating Brownian motion against Brownian motion.} Use It\^{o} chain rule (also called It\^{o}'s Lemma) to verify the identity
+	\[ \int_0^T W \, dW = \half \bigg( W^2(T) - T \bigg). \]
 \end{enumerate}
 
 \appendix
@@ -154,16 +169,47 @@ Note: this is a work in progress.
 \begin{enumerate}
 \item A \textbf{stochastic process} $\set{X(t): t \in \mathcal{T}}$ is a collection of random variables over some index set $\mathcal{T} \subset \R$.
 \item A \textbf{Gaussian process} $\set{X(t): t \geq 0}$ is a stochastic process such that for all numbers $n=1,2,\hdots$ and all times $t_1, t_2, \hdots t_n$, the random vector $\big( X(t_1), X(t_2), \hdots, X(t_n) \big)$ has a joint normal distribution.
-\item A \textbf{standard Brownian motion} $\set{B(t): t \geq 0}$ is a stochastic process having
+\item A \textbf{standard Brownian motion} $\set{W(t): t \geq 0}$ is a stochastic process having
 \begin{itemize}
 \item[(i)] continuous paths,
 \item[(ii)] stationary, independent increments, and
-\item[(iii)] $B(t) \sim N(0,t)$ for all $t \geq 0$.
+\item[(iii)] $W(t) \sim N(0,t)$ for all $t \geq 0$.
 \end{itemize} 
 \item A \textbf{standard Brownian Bridge} is a Gaussian process $X$ with continuous paths, mean 0, and covariance function $\Cov(X_s, X_t)=s(1-t)$ for $0 \leq s \leq t \leq 1$.
 
-%TOADD (Diffusion): Def of stationary increments, independent increments.
-%TOADD (Markov Chain): Ehrenfest model. Recurrent, transient.
+\item \textbf{Little-o notation.} Let $f(x)$ and $g(x)$ be functions defined on some neighborhood of $x_0$. We write
+	$f(x) = o(g(x))$ as $x \to x_0$ if 
+	\[
+	\lim_{x \to x_0} \frac{f(x)}{g(x)} = 0.
+	\]
+Equivalently, $f(x)$ becomes negligible relative to $g(x)$ as $x$ approaches $x_0$.
+\item \textbf{Infinitesimal parameters.} Consider a stochastic differential equation (SDE) of the form  
+%
+\begin{align*}
+dX = \mu(X) \, dt + \sigma(X) dW.
+\end{align*}
+Then we have
+%
+\begin{align*}
+\E[X(t+h)-X(t) \mid X(t)=x] &= \mu(x)h + o(h), \\
+\intertext{and}
+\Var[X(t+h)-X(t) \mid X(t)=x] &= \sigma^2(x)h + o(h). \\	
+\end{align*}
+%
+Terms like \enquote{infinitesimal mean function} or \enquote{infinitesimal drift}  are used for $\mu(\cdot)$, and  $\sigma^2(\cdot)$ has names like \enquote{infinitesimal variance function} or \enquote{diffusion function}.
+\item \textbf{It\^{o}'s Lemma (heuristic statement, special case.)} 
+Let  $X(\cdot)$ be a 1-dimensional real-valued stochastic process which solves the following SDE  
+%
+\begin{align*}
+dX = b \, dt + dW,
+\end{align*}
+where $W$ is 1-dimensional Brownian motion. Let $u: \R \to \R$ be a given smooth function, $u=u(x)$.  Consider the SDE 
+\[ Y(t) \defeq u(X(t)), \qquad (t \geq 0). \]
+Then 
+\[ dY = \bigg(u'b + \red{\half u''} \bigg) dt + u' dW,  \]
+where here we use the notation ${}^\prime = \frac{d}{dx}$.
+%TODO (Diffusion): Def of stationary increments, independent increments.
+%TODO (Markov Chain): Ehrenfest model. Recurrent, transient.
 \end{enumerate}
 
 

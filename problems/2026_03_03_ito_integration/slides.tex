@@ -228,8 +228,8 @@ This is known as \alert{\texttt{geometric Brownian motion.}}
 \only<2-4>{Now:
 \begin{itemize}
 \onslide<2-4>{\item  The sample paths are always positive.}
-\onslide<3-4>{ \item  The confidence bands widen exponentially over time.}
-\onslide<4>{\item  The expected value grows exponentially over time $E[X_t]=X_0 e^{\mu t}$.}
+\onslide<3-4>{\item  The expected value grows exponentially over time $E[X_t]=X_0 e^{\mu t}$.}
+\onslide<4>{ \item  The confidence bands widen exponentially over time.}
 \end{itemize}
 }
 
@@ -238,12 +238,12 @@ Yet another way to describe geometric Brownian motion is
 \begin{align*}
 \colorbox{blue!15}{$Y_t=e^{X_t}$,}
 \end{align*}
-where $X_t$ satisfies the SDE $dX = a \, dt + \sigma \,  dW$ (with $a= \mu - \half \sigma^2$).
+where $X_t$ satisfies the SDE $dX = \mu \, dt + \sigma \,  dW$ %(where $X_t$ satisfies the SDE $dX = a\, dt + \sigma \,  dW$ with $a= \mu - \half \sigma^2$).
 } 
 
 \vfill 
 \only<6>{
-The desire to \underline{compose} stochastic processes motivates the \alert{It\^{o} chain rule}.   This is a chain rule for stochastic processes.
+The desire to \underline{compose} stochastic processes motivates the \alert{It\^{o} chain rule}, a chain rule for stochastic processes.
 }
 
 
@@ -316,6 +316,30 @@ dY &= u' dX + \half u'' (dX)^2 + \hdots && \scripttext{Taylor series} \\
 \end{frame}
 
 
+
+\begin{frame}{Integrating Brownian motion against Brownian motion}
+\small 
+\colorbox{yellow!30}{\textbf{Poll.}}  Let's consider the stochastic integral
+\[V(T) = \int_0^T W_t \, dW_t \qquad \qquad \]
+
+How can we interpret this? 
+\pause 
+
+\colorbox{green!30}{\textbf{Interpretations.}}
+\begin{itemize}
+	\item \textit{Finance.} $V(T)$ is the total profit from a betting strategy where a person bets an amount proportional to one's current position/capital $W_t$. \pause 
+	\item \textit{Mental health.}  $V(T)$ is the emotional dysregulation (or relapse risk accumulation) when the effect of new stress $dW_t$ depends on how stressed $W_t$ the person already is. \pause 
+	\begin{itemize}
+	\item \textit{Multiplicative risk accumulation.} In general, this can be seen as the simplest mathematical prototype for \textit{risk accumulation in a system where shocks matter more when the system is already strained.} \pause 
+	\end{itemize}  
+\end{itemize}
+
+\pause 
+
+\colorbox{red!30}{\textbf{Problem.}} How in the world do we \alert{compute} this integral?!
+
+\end{frame}
+
 \begin{frame}{It\^{o} chain rule: A simple application} 
 
 In the group exercises, we'll use It\^{o}'s chain rule to verify the identity
@@ -342,20 +366,15 @@ In the group exercises, we'll use It\^{o}'s chain rule to verify the identity
 
 
 
-\begin{frame}{Integrating Brownian motion against Brownian motion}
-\small 
-\colorbox{yellow!30}{\textbf{Poll.}} How can we interpret the integral 
-\[V(T) = \int_0^T W_t \, dW_t \qquad \qquad ?\]
-\pause 
+\begin{frame}{Verifying the It\^{o} correction term} 
 
-\colorbox{green!30}{\textbf{Interpretations.}}
-\begin{itemize}
-	\item \textit{Finance.} $V(T)$ is the total profit from a betting strategy where a person bets an amount proportional to one's current position/capital $W_t$. \pause 
-	\item \textit{Mental health.}  $V(T)$ is the emotional dysregulation (or relapse risk accumulation) when the effect of new stress $dW_t$ depends on how stressed $W_t$ the person already is. \pause 
-	\item \textit{Generic.} In general, this can be seen as the simplest mathematical prototype for \textit{risk accumulation in a system where shocks matter more when the system is already strained.} \pause 
-\end{itemize}
+\colorbox{yellow!30}{\textbf{Review.}} Recall that we could interpret the integral 
+\[V(T) = \int_0^T W_t \, dW_t \qquad \qquad \]
 
-\colorbox{blue!30}{\textbf{Observation.}} Another corroboration of \red{It\^{o}'s correction term} $\int_0^T W_t \, dW_t = \half \big( W^2(T) \red{- T} \big)$: without it, there would be a way to make unlimited money by betting (arbitrage)!
+as the total profit from a betting strategy where a person bets an amount proportional to one's current position/capital $W_t$. 
+\vfill 
+\colorbox{blue!30}{\textbf{Observation.}} This gives another corroboration of \red{It\^{o}'s correction term} $\int_0^T W_t \, dW_t = \half \big( W^2(T) \red{- T} \big)$: without it, there would be a way to make unlimited money by betting (arbitrage)!
+	
 \end{frame}
 
 

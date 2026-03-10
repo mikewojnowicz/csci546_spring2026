@@ -1,0 +1,357 @@
+\documentclass[10pt]{beamer}
+
+
+
+%%%
+% PREAMBLE FOR THIS DOC 
+%%%
+%https://tex.stackexchange.com/questions/68821/is-it-possible-to-create-a-latex-preamble-header
+\usepackage{/Users/miw267/Repos/csci246_spring2025/slides/preambles/beamer_preamble_for_CSCI246}
+
+\usepackage{wrapfig}  
+
+
+%%% TRY TO RESHOW TOC AT EACH SECTION START (with current section highlighted)
+% Reference: https://tex.stackexchange.com/questions/280436/how-to-highlight-a-specific-section-in-beamer-toc
+\newcommand\tocforsect[2]{%
+  \begingroup
+  \edef\safesection{\thesection}
+  \setcounter{section}{#1}
+  \tableofcontents[#2,currentsection]
+  \setcounter{section}{\safesection}
+  \endgroup
+}
+
+
+\usepackage[normalem]{ulem} % for strikeout (\sout)
+
+%%%% HERES HOW TO DO IT CORRECTLY
+% FIRST IN .STY FILE, DO
+%\usetheme[sectionpage=none]{metropolis}
+% THEN AT EACH SECTION DO
+%\begin{frame}{Outline}
+%  \tableofcontents[currentsection]	
+%\end{frame}
+
+
+
+%\setbeamertemplate{navigation symbols}{}
+%\setbeamertemplate{footline}[frame number]{}
+
+
+%%%
+% DOCUMENT
+%%%
+
+\begin{document}
+
+%\maketitle
+
+%% Title page frame
+%\begin{frame}
+%    \titlepage 
+%\end{frame}
+
+
+
+\title{02/05/2026: Continuous Random Variables (Part 2)}
+\author{CSCI 546: Diffusion Models}
+\date{Textbook reference: Sec 4.6-4.10}
+
+\begin{frame}
+    \titlepage 
+\end{frame}
+
+\begin{frame}
+%\begin{myyellowbox}[title=Opening Discussion ($\approx$ 5 mins)]
+%Find a partner and discuss these questions.
+%\begin{enumerate}
+%	\item What is your early reflection on the class?
+%		\begin{itemize}
+%		\item[a)] goal
+%		\item[b)] hope
+%		\item[c)] fear
+%		\item[d)] like
+%		\item[e)] dislike
+%		\end{itemize}
+%	\item Reflect on your experience reading the textbook.
+%\end{enumerate}
+%\end{myyellowbox}
+%\vfill 
+%\pause 
+\begin{mygreenbox}[title=Announcement (Sign-in Sheet)]
+Please sign the sign-in sheet.
+\end{mygreenbox}
+%\vfill 
+%\pause 
+%\begin{myredbox}[title=\text{Announcement (Office Hours)}]
+%My office hours today need to be changed due to a grant meeting.  If you would like to meet on today, please send me an email to set up a time.
+%\end{myredbox}
+%\vfill 
+%\pause 
+%\begin{myyellowbox}[title=\text{Announcement (Group exercises)}]
+%Group exercises will be posted to the course repo after class. Please continue working on what you don't finish in class.  
+%\end{myyellowbox}
+\end{frame}
+
+\begin{frame}[standout]
+Review Problem Set \#6	
+\end{frame}
+
+\begin{frame}[standout]
+Concepts for Problem Set \#7
+\end{frame}
+
+\begin{frame}{Stein's Identity}
+
+Let $X$ be random variable with unknown probability density function $p$. Score-based diffusion models (Module 2B) need to learn the \textit{score function}
+\[ \nabla_x \log p(x)\]
+
+
+\only<1-2>{
+\begin{center}
+\includegraphics[width=.8\textwidth]{images/score_function.png}	
+\end{center}
+
+}
+
+\only<2>{
+\colorbox{yellow!30}{\textbf{Problem.}} How to learn the score function without knowing the density $p$?
+}
+
+
+
+\only<3-4>{
+\begin{mygreenbox}[title=\text{Stein's Identity}]
+With some abuse of notation, we write Stein's Identity as 
+\[  \E[g(X) \nabla \log p(X)] = -\E[\nabla g(X)].\]
+for sufficiently ``nice'' density $p$ and test function $g$.
+\end{mygreenbox}
+%\vfill 
+}
+
+\only<4>{
+\colorbox{red!30}{\textbf{Implications.}}
+\begin{itemize}
+\item The RHS does not involve $p$ explicitly.
+\item It only involves expectations over samples (which can be approximated empirically).	
+\end{itemize}
+}
+\end{frame}
+
+
+\begin{frame}{Multivariate Normal distribution}
+
+The random vector $\+X = (X_1,X_2, \hdots, X_n)$ has the \textbf{multivariate normal distribution} (or \textbf{multivariate Gaussian distribution}), written $\N(\+\mu, \+\Sigma)$, if it has the joint probability density function
+
+\[ 
+f(\+x)
+= \frac{1}{(2\pi)^{d/2}\, | \+\Sigma|^{1/2}}
+  \exp\!\left(
+    -\frac{1}{2} (\+x-\+\mu)^\top  \+\Sigma^{-1} (\+x-\+\mu)
+  \right),
+\qquad \+x \in \mathbb{R}^n.
+\] 
+\pause 
+\begin{itemize}
+\item $\+\mu$ is the mean $\+E[\+X]$. \pause 
+\item $\+\Sigma = \begin{pmatrix}
+\sigma_{11} & \sigma_{12} & \cdots & \sigma_{1n} \\
+\sigma_{21} & \sigma_{22} & \cdots & \sigma_{2n} \\
+\vdots      & \vdots      & \ddots & \vdots      \\
+\sigma_{n1} & \sigma_{n2} & \cdots & \sigma_{nn}
+\end{pmatrix}$ is the covariance matrix. \pause 	\begin{itemize}
+	\item $\sigma_{11} = \Cov(X_1,X_1) = \Var(X_1)$
+	\item  $\sigma_{12} = \Cov(X_1,X_2)$
+	\item $\vdots$
+	\end{itemize}
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Example: Bivariate Normal distribution}
+
+\begin{center}
+\includegraphics[width=.9\textwidth]{images/mvn_1.png}	
+\end{center}
+
+\bottomtext{\hfill Reference: \textit{Probability \& Statistics with Applications to Computing} by Alex Tsun}	
+\end{frame}
+
+
+\begin{frame}{Example: Bivariate Normal distribution}
+
+\begin{figure}
+\includegraphics[width=.8\textwidth]{images/mvn_2.png}	
+\caption{Many sample points from a bivariate normal distribution with $\boldsymbol\mu = \left[\begin{smallmatrix}0 \\ 0\end{smallmatrix}\right]$ and $\boldsymbol\Sigma = \left[\begin{smallmatrix}1 & 3/5 \\ 3/5 & 2\end{smallmatrix}\right]$, shown along with the 3-sigma ellipse, the two marginal distributions, and the two 1-d histograms.}
+\end{figure}
+\bottomtext{\hfill Reference: Wikipedia}	
+\end{frame}
+
+
+%\begin{frame}{Example: Bivariate Normal distribution}
+\begin{frame}
+
+\begin{center}
+\includegraphics[width=.6\textwidth]{images/mvn_3.png}	
+\end{center}
+
+\vfill 
+\colorbox{yellow!30}{\textbf{Poll.}} What is happening in each row?
+
+%\bottomtext{\hfill Reference: \textit{Probability \& Statistics with Applications to Computing} by Alex Tsun}	
+\end{frame}
+
+\begin{frame}{Properties of covariance matrices}
+
+
+Covariance matrices $\+\Sigma$ have two useful properties
+
+
+\begin{enumerate}
+\item   \colorbox{green!30}{\textbf{Symmetry.}}  A $d \times d$ matrix $\+\Sigma$ is symmetric if $\+\Sigma^\top = \+\Sigma$. That is,
+\[
+\Sigma
+=
+\begin{pmatrix}
+\sigma_{11}
+& \color{purple}{\sigma_{12}}
+& \cdots
+& \color{red}{\sigma_{1n}} \\
+
+\color{purple}{\sigma_{21}}
+& \sigma_{22}
+& \cdots
+& \color{green}{\sigma_{2n}} \\
+
+\vdots
+& \vdots
+& \ddots
+& \vdots \\
+
+\color{red}{\sigma_{n1}}
+& \color{green}{\sigma_{n2}}
+& \cdots
+& \sigma_{nn}
+\end{pmatrix}
+=
+\begin{pmatrix}
+\sigma_{11}
+& \color{purple}{\sigma_{21}}
+& \cdots
+& \color{red}{\sigma_{n1}} \\
+
+\color{purple}{\sigma_{12}}
+& \sigma_{22}
+& \cdots
+& \color{green}{\sigma_{n2}} \\
+
+\vdots
+& \vdots
+& \ddots
+& \vdots \\
+
+\color{red}{\sigma_{1n}}
+& \color{green}{\sigma_{2n}}
+& \cdots
+& \sigma_{nn}
+\end{pmatrix}
+=
+\Sigma^\top .
+\]
+\pause 
+\item \colorbox{green!30}{\textbf{Positive semi-definiteness.}} A $n \times n$ matrix $\+\Sigma$ is positive semi-definite if $\+x^\top \+\Sigma \+x \geq 0$ for all $\+x \in \R^n$. 
+\end{enumerate}
+	
+\end{frame}
+
+\begin{frame}{Matrix Square Roots}
+
+
+\colorbox{green!30}{\textbf{Theorem.}} A symmetric matrix $\+\Sigma$ has a symmetric square root $\+Q$ (where $\+Q^2 = \+\Sigma$) if it is positive semi-definite.
+
+\vfill 
+\pause 
+\colorbox{red!30}{\textbf{Method.}}
+
+\begin{enumerate}
+	\item  Diagonalize the symmetric matrix $\+\Sigma=\+U\+D \+U^\top$, where $\+U$ is an orthonormal and $\+D$ is a diagonal matrix. \pause 
+		\begin{itemize}
+		\item $\+U$ is orthonormal means $\+U^\top \+U = \+I = \begin{pmatrix}
+1 & 0 & \cdots & 0 \\
+0 & 1 & \cdots & 0 \\
+\vdots & \vdots & \ddots & \vdots \\
+0 & 0 & \cdots & 1
+\end{pmatrix}.$ \pause 
+		\item $\+D$ is diagonal means  $\+D =
+\begin{pmatrix}
+d_1 & 0 & \cdots & 0 \\
+0 & d_2 & \cdots & 0 \\
+\vdots & \vdots & \ddots & \vdots \\
+0 & 0 & \cdots & d_n
+\end{pmatrix}.$ \pause 
+		\end{itemize}
+
+	\item Compute the diagonal matrix of square roots: $\+D^{1/2}$. (Just take the square root of each diagonal element.) \pause 
+	\item Compute $\+Q=\+\Sigma^{1/2}=\+U\+D^{1/2}\+U^\top$. \pause 
+\end{enumerate}
+	
+\end{frame}
+
+
+\begin{frame}{Random Groups}
+
+\begin{columns}
+\begin{column}{0.33\textwidth}
+Aubrey Williams: 4 \\ 
+Austin Barton : 3 \\ 
+Blake Sigmundstad: 6 \\ 
+Diego Moylan: 1 \\ 
+Dillon Shaffer: 7 \\ 
+Ismoiljon Muzaffarov: 3 \\ 
+Jacob Tanner: 4 \\\end{column}
+\begin{column}{0.33\textwidth}
+Josh Stoneback: 6 \\ 
+Joshua Bowen: 8 \\ 
+Joshua Culwell: 2 \\ 
+Laura Banaszewski: 3 \\ 
+Lina Hammel: 2 \\ 
+Logan Racz: 1 \\\end{column}
+\begin{column}{0.33\textwidth}
+Matt Hall: 2 \\ 
+Micah Miller: 5 \\ 
+Mike Kadoshnikov: 1 \\ 
+Owen Cool: 7 \\ 
+Racquel Bowen: 4 \\ 
+Samuel Mocabee: 5 \\ 
+Tatiana Kirillova: 8 \\\end{column}
+\end{columns}
+
+\end{frame}
+
+
+\begin{frame}{Group exercises - Problem Set 7}
+\footnotesize  
+\begin{enumerate}
+\item (Sec 4.6) \textbf{Conditional distributions.} Suppose $X,Y$ has the joint density
+
+\[ f_{X,Y}(x,y) =
+\begin{cases}
+2, & 0 < x < y < 1, \\
+0, & \text{otherwise}.
+\end{cases}
+\]
+(a) Find the \textit{marginal density} $f_Y(y)$. (b) Compute the \textit{conditional density} $f_{X\mid Y}(x \mid y)$.
+\item (4.7.25a) \textbf{Stein's Identity} 
+	\begin{itemize}
+	\item[a.] Justify Stein's identity, which can be expressed with some abuse of notation as
+\[  \E[g(X) \nabla \log f(X)] = -\E[\nabla g(X)],\]
+where here we assume sufficiently ``nice'' density $f$ and test function $g$.  (Hint: Use Integration By Parts.)
+	\item[b.] Show that in the special case where $X \sim N(\mu, \sigma^2)$, Stein's identity reduces to
+	\[ \E[g(X) (X-\mu)] = \sigma^2 E[g'(X)] \]
+	\end{itemize}
+\item (4.9.2) \textbf{Standard Multivariate Normals: Whitening/Decorrelation.} If $\+X$ is a random vector with the $N(\+\mu, \+V)$ distribution where $\+V$ is non-singular, show that $\+Y = (\+X-\+\mu)\+V^{-\half}$ is has the $N(\textbf{0}, \+I)$ distribution, where $\+I$ is the identity matrix. The random vector $\+Y$ is said to have the \textit{standard} multivariate normal distribution. 
+\end{enumerate}   
+\end{frame}
+
+
+\end{document}

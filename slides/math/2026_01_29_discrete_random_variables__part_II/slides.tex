@@ -1,0 +1,185 @@
+\documentclass[10pt]{beamer}
+
+
+
+%%%
+% PREAMBLE FOR THIS DOC 
+%%%
+%https://tex.stackexchange.com/questions/68821/is-it-possible-to-create-a-latex-preamble-header
+\usepackage{/Users/miw267/Repos/csci246_spring2025/slides/preambles/beamer_preamble_for_CSCI246}
+
+\usepackage{wrapfig}  
+
+
+%%% TRY TO RESHOW TOC AT EACH SECTION START (with current section highlighted)
+% Reference: https://tex.stackexchange.com/questions/280436/how-to-highlight-a-specific-section-in-beamer-toc
+\newcommand\tocforsect[2]{%
+  \begingroup
+  \edef\safesection{\thesection}
+  \setcounter{section}{#1}
+  \tableofcontents[#2,currentsection]
+  \setcounter{section}{\safesection}
+  \endgroup
+}
+
+
+\usepackage[normalem]{ulem} % for strikeout (\sout)
+
+%%%% HERES HOW TO DO IT CORRECTLY
+% FIRST IN .STY FILE, DO
+%\usetheme[sectionpage=none]{metropolis}
+% THEN AT EACH SECTION DO
+%\begin{frame}{Outline}
+%  \tableofcontents[currentsection]	
+%\end{frame}
+
+
+
+%\setbeamertemplate{navigation symbols}{}
+%\setbeamertemplate{footline}[frame number]{}
+
+
+%%%
+% DOCUMENT
+%%%
+
+\begin{document}
+
+%\maketitle
+
+%% Title page frame
+%\begin{frame}
+%    \titlepage 
+%\end{frame}
+
+
+
+\title{01/29/2026: Discrete Random Variables (Part 2)}
+\author{CSCI 546: Diffusion Models}
+\date{Textbook reference: Sec 3.6-3.10}
+
+\begin{frame}
+    \titlepage 
+\end{frame}
+
+\begin{frame}
+%\begin{myyellowbox}[title=Opening Discussion ($\approx$ 5 mins)]
+%Find a partner and discuss these questions.
+%\begin{enumerate}
+%	\item What is your early reflection on the class?
+%		\begin{itemize}
+%		\item[a)] goal
+%		\item[b)] hope
+%		\item[c)] fear
+%		\item[d)] like
+%		\item[e)] dislike
+%		\end{itemize}
+%	\item Reflect on your experience reading the textbook.
+%\end{enumerate}
+%\end{myyellowbox}
+%\vfill 
+%\pause 
+\begin{mygreenbox}[title=Announcement (Sign-in Sheet)]
+Please sign the sign-in sheet.
+\end{mygreenbox}
+%\vfill 
+%\pause 
+%\begin{myredbox}[title=\text{Announcement (Office Hours)}]
+%My office hours today need to be changed due to a grant meeting.  If you would like to meet on today, please send me an email to set up a time.
+%\end{myredbox}
+%\vfill 
+%\pause 
+%\begin{myyellowbox}[title=\text{Announcement (Group exercises)}]
+%Group exercises will be posted to the course repo after class. Please continue working on what you don't finish in class.  
+%\end{myyellowbox}
+\end{frame}
+
+\begin{frame}[standout]
+Review Problem Set \#4	
+\end{frame}
+
+\begin{frame}[standout]
+Concepts for Problem Set \#5
+\end{frame}
+
+\begin{frame}{Correlation Coefficient}
+The \textbf{correlation coefficient} $\rho$ shows the strength and direction of the \alert{linear} relationship between two random variables $X$ and $Y$.
+
+\begin{center}
+\includegraphics[width=0.8\textwidth]{images/correlation_coefficient.png}	
+\end{center}
+
+\vfill 
+\pause 
+\colorbox{blue!30}{\textbf{Remark.}} We have
+\[ |\rho(X,Y)| \leq 1,  \]
+with equality if and only if $X$ and $Y$ are linearly related (with probability 1).
+\end{frame}
+
+\begin{frame}{Correlation Coefficient}
+
+
+\colorbox{yellow!30}{\textbf{Poll.}} Can uncorrelated random variables be dependent?
+\pause 
+\vfill 
+
+	
+\colorbox{green!30}{\textbf{Solution.}} Yes. 
+\begin{center}
+\includegraphics[width=0.8\textwidth]{images/dependent_but_uncorrelated.png}	
+\end{center}
+The correlation reflects the noisiness and direction of a linear relationship (top row), but not the slope of that relationship (middle), nor many aspects of nonlinear relationships (bottom).
+
+\end{frame}
+
+
+
+
+
+\begin{frame}{Random Groups}
+
+\begin{columns}
+\begin{column}{0.33\textwidth}
+Aubrey Williams: 1 \\ 
+Austin Barton : 4 \\ 
+Blake Sigmundstad: 7 \\ 
+Diego Moylan: 2 \\ 
+Dillon Shaffer: 1 \\ 
+Ismoiljon Muzaffarov: 3 \\ 
+Jacob Tanner: 6 \\\end{column}
+\begin{column}{0.33\textwidth}
+Josh Stoneback: 1 \\ 
+Joshua Bowen: 5 \\ 
+Joshua Calwell: 8 \\ 
+Laura Banaszewski: 3 \\ 
+Lina Hammel: 8 \\ 
+Logan Racz: 4 \\\end{column}
+\begin{column}{0.33\textwidth}
+Matt Hall: 6 \\ 
+Micah Miller: 7 \\ 
+Mike Kadoshnikov: 5 \\ 
+Owen Cool: 2 \\ 
+Racquel Bowen: 2 \\ 
+Samuel Mocabee: 4 \\ 
+Tatiana Kirillova: 3 \\\end{column}
+\end{columns}
+
+\end{frame}
+
+
+
+\begin{frame}{Group exercises - Problem Set 5}
+\begin{enumerate}
+\item (3.11.16) Let $X$ and $Y$ be independent Bernoulli random variables with parameter $\frac{1}{2}$.  Show that $X+Y$ and $|X-Y|$ are dependent though uncorrelated.
+\item (Sec 3.6) Use the Cauchy-Schwarz Inequality to show that the correlation coefficient $\rho$ satisfies $|\rho(X,Y)| \leq 1$ with equality if and only if $Y =mX+b$ with probability 1 for some $m,b \in \R$. (Hint: Apply Cauchy-Schwarz to the variables $X-E[X]$ and $Y-E[Y]$.)
+\item (3.7.6) Let $X_1, X_2, \hdots$ be identically distributed random variables with mean $\mu$ and variance $\sigma^2$, and let $N$ be a random variable taking values in the non-negative integers and independent of the $X_i$.  Let $S=X_1+X_2+\cdots+X_N$.  
+\begin{itemize}
+\item[a.] Show that $\E[S \mid N] = \mu N$, and deduce that $\E[S]=\mu \E[N]$.  
+\item[b.] Find $\Var[S]$ using the conditional variance formula $\Var[S]=\E[\Var[S \mid N]] + \Var[\E[S \mid N]]$.	
+\end{itemize}
+
+\end{enumerate}   
+\end{frame}
+
+
+\end{document}

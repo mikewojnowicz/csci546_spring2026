@@ -1,0 +1,165 @@
+\documentclass[10pt]{beamer}
+
+
+
+%%%
+% PREAMBLE FOR THIS DOC 
+%%%
+%https://tex.stackexchange.com/questions/68821/is-it-possible-to-create-a-latex-preamble-header
+\usepackage{/Users/miw267/Repos/csci246_spring2025/slides/preambles/beamer_preamble_for_CSCI246}
+
+\usepackage{wrapfig}  
+
+
+%%% TRY TO RESHOW TOC AT EACH SECTION START (with current section highlighted)
+% Reference: https://tex.stackexchange.com/questions/280436/how-to-highlight-a-specific-section-in-beamer-toc
+\newcommand\tocforsect[2]{%
+  \begingroup
+  \edef\safesection{\thesection}
+  \setcounter{section}{#1}
+  \tableofcontents[#2,currentsection]
+  \setcounter{section}{\safesection}
+  \endgroup
+}
+
+
+\usepackage[normalem]{ulem} % for strikeout (\sout)
+
+%%%% HERES HOW TO DO IT CORRECTLY
+% FIRST IN .STY FILE, DO
+%\usetheme[sectionpage=none]{metropolis}
+% THEN AT EACH SECTION DO
+%\begin{frame}{Outline}
+%  \tableofcontents[currentsection]	
+%\end{frame}
+
+
+
+%\setbeamertemplate{navigation symbols}{}
+%\setbeamertemplate{footline}[frame number]{}
+
+
+%%%
+% DOCUMENT
+%%%
+
+\begin{document}
+
+%\maketitle
+
+%% Title page frame
+%\begin{frame}
+%    \titlepage 
+%\end{frame}
+
+
+
+\title{01/21/2026: Random Variables and their Distributions (Part 2)}
+\author{CSCI 546: Diffusion Models}
+\date{Textbook reference: Sec 2.4-2.6}
+
+\begin{frame}
+    \titlepage 
+\end{frame}
+
+\begin{frame}
+%\begin{myyellowbox}[title=Opening Discussion ($\approx$ 5 mins)]
+%Find a partner and discuss these questions.
+%\begin{enumerate}
+%	\item What is your early reflection on the class?
+%		\begin{itemize}
+%		\item[a)] goal
+%		\item[b)] hope
+%		\item[c)] fear
+%		\item[d)] like
+%		\item[e)] dislike
+%		\end{itemize}
+%	\item Reflect on your experience reading the textbook.
+%\end{enumerate}
+%\end{myyellowbox}
+%\vfill 
+%\pause 
+\begin{mygreenbox}[title=Announcement (Sign-in Sheet)]
+Please sign the sign-in sheet.
+\end{mygreenbox}
+\vfill 
+\pause 
+\begin{myyellowbox}[title=\text{Announcement (Office Hours)}]
+My office hours this semester are Tues 12:15-1:15 and Thurs 12-2. The syllabus has been updated.
+\end{myyellowbox}
+\vfill 
+\pause 
+\begin{myredbox}[title=\text{Announcement (Presentation Logistics)}]
+I have an ipad and HDMI-USBc connector on order at the bookstore. They should come in sometime next week. 
+\end{myredbox}
+
+
+\end{frame}
+
+\begin{frame}[standout]
+Review Problem Set \#2	
+\end{frame}
+
+
+\begin{frame}{Random Groups}
+
+\begin{columns}
+\begin{column}{0.33\textwidth}
+Aubrey Williams: 5 \\ 
+Austin Barton : 4 \\ 
+Blake Sigmundstad: 7 \\ 
+Diego Moylan: 4 \\ 
+Dillon Shaffer: 3 \\ 
+Felicia Jayasaputra: 2 \\ 
+Ismoiljon Muzaffarov: 6 \\\end{column}
+\begin{column}{0.33\textwidth}
+Jacob Tanner: 8 \\ 
+Josh Stoneback: 2 \\ 
+Joshua Bowen: 1 \\ 
+Joshua Calwell: 3 \\ 
+Laura Banaszewski: 1 \\ 
+Lina Hammel: 1 \\ 
+Logan Racz: 4 \\\end{column}
+\begin{column}{0.33\textwidth}
+Matt Hall: 8 \\ 
+Micah Miller: 3 \\ 
+Mike Kadoshnikov: 5 \\ 
+Owen Cool: 2 \\ 
+Racquel Bowen: 5 \\ 
+Samuel Mocabee: 7 \\ 
+Tatiana Kirillova: 6 \\\end{column}
+\end{columns}
+
+\end{frame}
+
+
+
+\begin{frame}{Group exercises - Problem Set 3}
+\footnotesize 
+\begin{minipage}[c]{0.82\textwidth}
+\begin{enumerate}
+\item  \textbf{The Dice DJ.}  A DJ has a strange music mixer with three independent fair six-sided dice:
+	\noindent
+	\begin{itemize}
+	\scriptsize 
+	\item Die A controls bass,
+	\item Die B controls treble,
+	\item Die C controls tempo.
+	\end{itemize}
+	\footnotesize 
+Let $X = \text{max}(A,B,C)$ be the loudest setting reached by any dial. (a) What is the distribution of $X$? (b) What is the probability that the system hits level 5 or higher?
+\item (2.7.18) Eight pawns are placed on a chessboard, no more than one to a square.  What is the probability that (a) they are in a straight line (do not forget the diagonals), and (b) no two are in the same row and column?
+\item \textbf{Transitive Coins.} (2.7.16) Three coins each show heads with probability $\frac{3}{5}$.  The number of points for heads/tails is 10/2 for coin 1, 4/4 for coin 2, 3/20 for coin 3.  You and your opponent each choose a different coin. Each of you tosses your coin and the person with a larger score wins \$ 1 million.  Would you prefer to pick your coin first or second? 
+\vspace{-.1cm}
+\item (2.4.1) Let $X$ be a random variable with continuous distribution function $F$.  Find expressions for the distribution functions of the following random variables: (a) $X^2$, (b) $\sin X$.
+\end{enumerate}
+\end{minipage}%
+\hfill
+\begin{minipage}[t]{0.18\textwidth}
+	\includegraphics[width=\linewidth]{images/dj_dice}
+	\includegraphics[width=\linewidth]{images/chessboard}
+\end{minipage}%    
+\end{frame}
+
+
+\end{document}

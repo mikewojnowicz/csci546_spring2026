@@ -251,7 +251,7 @@ By the chain rule, we get
 \only<2-4>{
 \metroset{block=fill}
 \begin{block}{Energy/Entropy Decomposition of the ELBO}
-By applying the chain rule, we obtain a nice form
+We immediately obtain a nice form
 
  \begin{align*}
 \ELBO(q) &=   \E_q \big[ \log p(\+x, \+u) \big] - \E_q \big[ \log q(\+u) \big]  \\
@@ -262,7 +262,7 @@ By applying the chain rule, we obtain a nice form
 
 \only<3>{
 
-\colorbox{blue!30}{\textbf{Remark.}} The first term is a negative reconstruction error; the second acts as a regularizer.
+\colorbox{blue!30}{\textbf{Remark.}} The entropy term encourages spread-out distributions, preventing $q$ from collapsing to a point mass.
 }
 
 

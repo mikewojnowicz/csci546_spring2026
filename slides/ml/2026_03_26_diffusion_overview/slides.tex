@@ -274,9 +274,14 @@ The \textbf{diffusion kernel} is obtained by marginalizing over $\+z_1,\hdots, \
 	\item Get it to work. 
 	\item Try a different dataset (e. g. swiss roll, MNIST images)  
 	\item Tweak it to run \underline{binomial} diffusion, apply to binary heartbeat data, as per Sohl-Dickstein et al (2015) Fig 2.
-	\item Adjust codebase per ideas from Bishop.  
+	\item Adjust codebase per ideas from the ML literature (e.g. add a diffusion schedule for the betas, such as a cosine schedule).  
 	\end{itemize} \pause 
-\item \textit{Path 2}: Code up Bishop's algorithms from scratch, using Emilio's code as a guide, and apply it to some simple dataset.  \pause Note: this is harder because Bishop's algorithms are based on ``predicting the noise'' (Sec 20.2.4).
+\item \textit{Path 2}: Rewrite Emilio's code using ideas presented in Bishop:
+	\begin{itemize}
+	\item Sec 20.2.3 Rewriting the ELBO 
+	\item Sec 20.2.4 Predicting the noise.  
+	\end{itemize} 
+Do these changes improve results?
 \end{enumerate}
 \pause 
 \colorbox{red!30}{\textbf{Format.}} Work in groups of two.  Tell me your partner before leaving.  Prepare a \textbf{5 min} \alert{(hard cap!)} presentation for next class showing us what you tried/learned. Note: This will probably just be 2-3 slides.  

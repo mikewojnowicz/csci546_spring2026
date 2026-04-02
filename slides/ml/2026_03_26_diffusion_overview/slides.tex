@@ -145,7 +145,7 @@ That is, we must show
 Lightning Chat
 \end{frame}
 
-\section{Mini-Lecture}
+\section{Mini-Lecture: Diffusion}
 
 \begin{frame}{Forward Encoder}
 \small 
@@ -179,7 +179,7 @@ q(\+z_t \mid \+z_{t-1}) = \N\bigg( \sqrt{1-\beta_t}  \+z_{t-1} \, , \, \beta_t \
 \end{align}
 }
 
-\only<5->{\colorbox{yellow!30}{\textbf{Poll.}} What happens to \Eqref{eqn:diffusion_kernel} as $t$ increases?
+\only<5->{\colorbox{yellow!30}{\textbf{Poll.}} This clarifies interpretation. What happens to \Eqref{eqn:diffusion_kernel} as $t$ increases?
 }
 
 \only<6->{\colorbox{green!30}{\textbf{Solution.}} 
@@ -232,20 +232,21 @@ We see that each intermediate distribution has a simple closed-form Gaussian exp
 \section{Group Work Part II}
 
 
-
-\begin{frame}{Group Exercises (Part II)}
-
+\begin{frame}{Group Exercises Part II}
+\small 
 
 \colorbox{blue!30}{\textbf{Recall.}} The \textbf{forward transition kernel} is given by
 %
 \begin{align}
-q(\+z_t \mid \+z_{t-1}) = \N\bigg( \sqrt{1-\beta_t}  \+z_{t-1} \, , \, \beta_t \+I\bigg)	
+q(\+z_t \mid \+z_{t-1}) = \N\bigg( \sqrt{1-\beta_t}  \+z_{t-1} \, , \, \beta_t \+I\bigg),	
 \label{eqn:forward_transition_kernel_2}
 \end{align} %
+ \hfill  \scripttext{for $t=1,\hdots,T$ and where we define $\+z_0=\+x$. \qquad}
+
 The \textbf{diffusion kernel} is obtained by marginalizing over $\+z_1,\hdots, \+z_{t-1}$:
 %
 \begin{align}
- q(\+z_t \mid \+x) &= \N\bigg( \sqrt{\alpha_t}  \+x \, , \, (1-\alpha_t) \+I\bigg), \qquad \text{where} \quad \alpha_t \defeq \prod_{\tau=1}^t (1-\beta_t)  \label{eqn:diffusion_kernel} 
+ q(\+z_t \mid \+x) &= \N\bigg( \sqrt{\alpha_t}  \+x \, , \, (1-\alpha_t) \+I\bigg), \qquad \text{where} \quad \alpha_t \defeq \prod_{s=1}^t (1-\beta_s)  \label{eqn:diffusion_kernel} 
 \end{align}
 \vfill 
 
@@ -253,11 +254,29 @@ The \textbf{diffusion kernel} is obtained by marginalizing over $\+z_1,\hdots, \
 
 \begin{itemize}
 	\item \textit{Hint:} Use induction. 
-	\item \textit{Hint:} Use the fact that the sum of two independent Gaussian random variables is itself a Gaussian with additive means and covariances.
-	\item \textit{Hint:} To use the above, rewrite \Eqref{eqn:forward_transition_kernel_2} as 
-	\[ \+z_t = \sqrt{1-\beta_t}  \+z_{t-1} + \beta_t \+\epsilon_t, \qquad  \+\epsilon_t \sim \N(\+0,\+I)  \]
+	\item \textit{Hint:} Rewrite \Eqref{eqn:forward_transition_kernel_2} as 
+	\[ \+z_t = \sqrt{1-\beta_t}  \+z_{t-1} + \sqrt{\beta_t} \+\epsilon_t, \qquad  \+\epsilon_t \sim \N(\+0,\+I).   \]
+	Then use the fact that the sum of two independent Gaussian random variables is itself a Gaussian with additive means and covariances.
 \end{itemize} 
 
+\end{frame}
+
+
+\begin{frame}{Solution - Page 1}
+	
+\begin{figure}
+ \includegraphics[width=.8\textwidth]{images/group_exercise_soln_1} 	
+\end{figure}
+
+\end{frame}
+
+
+\begin{frame}{Solution - Page 2}
+
+\begin{figure}
+ \includegraphics[width=.8\textwidth]{images/group_exercise_soln_2} 	
+\end{figure}
+	
 \end{frame}
 
 

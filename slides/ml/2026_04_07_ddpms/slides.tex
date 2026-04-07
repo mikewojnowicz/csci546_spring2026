@@ -147,7 +147,7 @@ where
 }
 
 \only<6->{
-where by defining $\+z := \+x$, we have 
+where by defining $\+z_0 := \+x$, we have 
 \begin{align*}
 \ELBO(\+w) &=  \labeledredmathbox{one-step denoising terms}{- \ds\sum_{t=1}^T \int \KL{q(\+z_{t-1} \mid \+z_t, \+x)}{p(\+z_{t-1} \mid \+z_t, \+w)} \, q(\+z_t \mid \+x )\text{d} \+z_t}
 \end{align*}
@@ -159,7 +159,7 @@ where by defining $\+z := \+x$, we have
 \small
 
 \only<1>{
-\colorbox{yellow!30}{\textbf{Poll.}}  Our objective is tto minimize $\KL{q(\+z_{t-1} \mid \+z_t, \+x)}{p(\+z_{t-1} \mid \+z_t, \+w)}$.  What is this term doing?  
+\colorbox{yellow!30}{\textbf{Poll.}}  Our objective is to minimize $\KL{q(\+z_{t-1} \mid \+z_t, \+x)}{p(\+z_{t-1} \mid \+z_t, \+w)}$.  What is this term doing?  
 }
 
 \only<2->{
@@ -187,7 +187,7 @@ By reversing the noising Markov chain, we can compute
 But this depends on $\+x$. So we try to match it with
 %
 \begin{align*}
-\labeledredmathbox{approximate denoising}{p(\+z_{t-1} \mid \+z_t, \+w)} &= \N \bigg(\+\mu_t(\+z_t, \+w) \; , \; \sigma^2_t \+I \bigg).
+\labeledredmathbox{approximate denoising}{p(\+z_{t-1} \mid \+z_t, \+w)} &= \N \bigg(\widehat{\+m}_t(\+z_t, \+w) \; , \; \sigma^2_t \+I \bigg).
 \end{align*}
 
 }
@@ -203,7 +203,7 @@ Since the KL divergence
 is between two Gaussians, it reduces to :
 
 \begin{align*}
-\frac{1}{2\beta_t} \; \norm{\labeledgreenmathbox{true denoising mean}{\+m_t(\+z_t, \+x)}  -  \labeledredmathbox{approximate denoising mean}{\+\mu_t(\+z_t, \+w)}}^2 \; + \; \texttt{const}
+\frac{1}{2\beta_t} \; \norm{\labeledgreenmathbox{true denoising mean}{\+m_t(\+z_t, \+x)}  -  \labeledredmathbox{approximate denoising mean}{\widehat{\+m}_t(\+z_t, \+w)}}^2 \; + \; \texttt{const}
 \end{align*}
 
 
@@ -230,7 +230,7 @@ Our paper proposes that instead our neural networks should learn to \alert{predi
 \begin{frame}{Group exercise} 
 \colorbox{blue!30}{\textbf{Exercise.}} Prove that the true denoised mean can be written as 
 \[ \+m_t(\+z_t,\+x) = \frac{1}{\sqrt{1-\beta_t}} \bigg\{ \+z_t - \frac{\beta_t}{\sqrt{1-\alpha_t}} \+\epsilon_t \bigg\}. \]
-When the approximate denoised mean $\+\mu_t(\+z_t,\+w)$ takes the same form but with $\widehat{\+\epsilon}_t(\+z_t, \+w)$,  this leads to the \qq{predicting the noise} formulation. %(Bishop pp. 591).
+When the approximate denoised mean $\widehat{\+m}_t(\+z_t,\+w)$ takes the same form but with $\widehat{\+\epsilon}_t(\+z_t, \+w)$,  this leads to the \qq{predicting the noise} formulation. %(Bishop pp. 591).
 \pause 
 
 \colorbox{green!30}{\textbf{Reference.}} 

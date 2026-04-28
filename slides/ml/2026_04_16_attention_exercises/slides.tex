@@ -11,9 +11,8 @@
 %%%
 \usepackage{animate}
 
-\renewcommand{\ELBO}{\texttt{ELBO}}
-\renewcommand{\Q}{\mathcal{Q}}
 
+\newcommand{\kernel}{K}
 
 %%%%
 % DOCUMENT 
@@ -90,15 +89,17 @@ This allows us to perform regressions for datasets such as the Cosmic Microwave 
 \begin{figure} 
 \includegraphics[width=.8\textwidth]{images/CMB} 
 \end{figure}
-	
+
+\bottomtext{\hfill Reference: Wasserman, Larry. \textit{All of nonparametric statistics.}}
 \end{frame}
 
 \begin{frame}{Nonparametric Regression}
 
 We assume the \textbf{response variable} $Y$ is related to known \textbf{covariates} $X=x$ by the equation
 \[Y_i = r(x_i) + \epsilon_i, \qquad  \E[\epsilon_i]=0, \quad i=1,\hdots,n.\]
-\pause 
-Where we interpret the \qq{trend} $r(x)$ as the mean of $Y$ conditional on $X=x$, that is
+\pause
+\vfill  
+We may interpret the \qq{trend} $r(x)$ as the mean of $Y$ conditional on $X=x$, that is
 \[ r(x) = \E[Y \mid X=x].\]
 	
 \end{frame}
@@ -119,14 +120,14 @@ Where we interpret the \qq{trend} $r(x)$ as the mean of $Y$ conditional on $X=x$
 \includegraphics[width=0.25\textwidth]{images/boxcar}
 \\
 \textbf{Boxcar} \\
-\only<3>{$K(x)=\half \, I(x)$}
+\only<3>{$\kernel(x)=\half \, I(x)$}
 \end{tabular}
 &
 \begin{tabular}{c}
 \includegraphics[width=0.25\textwidth]{images/gaussian}
 \\
 \textbf{Gaussian} \\
-\only<3>{$K(x)=\frac{1}{\sqrt{2\pi}} e^{-x^2/2}$}
+\only<3>{$\kernel(x)=\frac{1}{\sqrt{2\pi}} e^{-x^2/2}$}
 \end{tabular}
 
 \\[1.5em]
@@ -135,14 +136,14 @@ Where we interpret the \qq{trend} $r(x)$ as the mean of $Y$ conditional on $X=x$
 \includegraphics[width=0.25\textwidth]{images/epanechnikov}
 \\
 \textbf{Epanechnikov} \\
-\only<3>{$K(x)=\frac{3}{4} (1-x^2)\, I(x)$}
+\only<3>{$\kernel(x)=\frac{3}{4} (1-x^2)\, I(x)$}
 \end{tabular}
 &
 \begin{tabular}{c}
 \includegraphics[width=0.25\textwidth]{images/tricube}
 \\
 \textbf{Tricube} \\
-\only<3>{$K(x)=\frac{70}{81} (1-|x|^3)^3 \, I(x)$} 
+\only<3>{$\kernel(x)=\frac{70}{81} (1-|x|^3)^3 \, I(x)$} 
 \end{tabular}
 \end{tabular}
 
@@ -162,10 +163,10 @@ I(x) =
 \begin{frame}{Smoothing Kernel}
 
 \begin{mybluebox}[title=Definition]
-A \textbf{smoothing kernel} is any smooth function $K$ such that $K(x)>0$ and
+A \textbf{smoothing kernel} is any smooth function $\kernel$ such that $\kernel(x)>0$ and
 %
 \begin{align*}
-\int K(x) \text{d}x=1, \qquad 	\int x \, K(x) \text{d}x=0, \quad \text{and} \quad \sigma^2_K \defeq \int x^2 K(x) \text{d}x >0 
+\int \kernel(x) \text{d}x=1, \qquad 	\int x \, \kernel(x) \text{d}x=0, \quad \text{and} \quad \sigma^2_\kernel \defeq \int x^2 \kernel(x) \text{d}x >0 
 \end{align*}
 \end{mybluebox}
 
@@ -217,35 +218,39 @@ A \textbf{smoothing kernel} is any smooth function $K$ such that $K(x)>0$ and
 	
 \begin{mybluebox}[title=Definition]
 
-\only<1->{Let $h>0$ be a positive number, called the \textbf{bandwidth}.  The \textbf{Nadaraya-Watson kernel estimator} is defined by}
+\only<1->{The \textbf{Nadaraya-Watson kernel estimator} is defined by}
 %
 \only<1>{
 \begin{align*}
-\widehat{r}(x) = \sum_{i=1}^n \ell_i(x) y_i
+\widehat{r}(x) = \sum_{i=1}^n w_i(x) y_i
 \end{align*}
 }
 
 \only<2->{
 \begin{align*}
-\widehat{r}(x) = \sum_{i=1}^n \; \explaintermbrace{weight}{\ell_i(x)} \explaintermbrace{observation}{y_i}
+\widehat{r}(x) = \sum_{i=1}^n \; \explaintermbrace{weight}{w_i(x)} \explaintermbrace{observation}{y_i}
 \end{align*}
 }
 
-\only<1->{
-where $K$ is a smoothing kernel and the weights $\ell_i(x)$ are given by
+\only<3->{
+where the weights $w_i(x)$ are given by
 %
 \begin{align}
-\ell_i(x) = \frac{K(\frac{x-x_i}{h})}{\sum_{j=1}^n K(\frac{x-x_j}{h})}	
+w_i(x) = \frac{\kernel(\frac{x-x_i}{h})}{\sum_{j=1}^n \kernel(\frac{x-x_j}{h})}	
 \end{align}
-
+for a smoothing kernel $\kernel$ with  \textbf{bandwidth} $h>0$.
 }
 \end{mybluebox}
 
-\only<3>{
-\vfill
-Basically, we estimate the trend $r(x)$ by taking a weighted average of the $y_i$'s, giving higher weight to those points that are \qq{close} to $x$. 
+\only<4>{
+\colorbox{yellow!30}{\textbf{Poll.}} Who can explain what's going on here?
 }
 
+\only<5->{
+\vfill
+\colorbox{blue!30}{\textbf{Remark.}} Basically, we estimate the trend $r(x)$ by taking a weighted average of the observations ($y_i$)'s, giving higher weight to the observations that are \qq{close} to $x$. 
+} \only<6->{The larger the bandwidth $h$, the more observations that are considered   \qq{close}.
+}
 
 \end{frame}
 
@@ -265,19 +270,63 @@ Let's use Nadayara-Watson kernel regression to estimate the trend for CMB data.
 
 \alert{Discussion:} How is attention pooling related to Nadayara-Watson kernel regression?
 \end{frame}
+t
+%
+%\begin{frame}{Summary}
+%
+%Attention is Nadaraya–Watson with kernel
+%
+%\[ \kernel(k; q_j)=\exp(k \cdot q_j).\]
+%
+%\pause 
+%\vfill 
+%
+%This kernel is \alert{learned} rather than fixed in advance.
+%
+%	
+%\end{frame}
 
-\begin{frame}{Summary}
 
-Attention is Nadaraya–Watson with kernel
-
-\[ K(k; q_j)=\exp(k \cdot q_j).\]
-
-\pause 
-\vfill 
-
-This kernel is \alert{learned} rather than fixed in advance.
-
+\begin{frame}{Attention as Nadaraya-Watson}
 	
+\begin{mybluebox}[title=Observation]
+
+\only<1->{Attention can be expressed as}
+%%
+%\only<1>{
+%\begin{align*}
+%\Delta y_j = \sum_{i=1}^n w(k_i) y_i
+%\end{align*}
+%}
+\only<1->{
+\begin{align*}
+\explaintermbrace{change in embedding}{\Delta y_j} = \sum_{i=1}^n \; \explaintermbrace{weight}{w_j(k_i)} \explaintermbrace{value (for $y_i$)}{v_i}
+\end{align*}
+}
+
+\only<2->{
+where the weights $w_j$ are given by
+%
+\begin{align}
+w_j(k_i) = \frac{\exp ( q_j \cdot k_i / \sqrt{d} )}{\sum_{i'=1}^n \exp ( q_j \cdot k_{i'} / \sqrt{d} ) }	
+\end{align}
+}
+\end{mybluebox}
+
+\only<3->{
+\colorbox{yellow!30}{\textbf{Poll.}} How is attention pooling related to Nadayara-Watson kernel regression?
+}
+
+\only<4->{
+\vfill
+\begin{itemize}
+\item This kernel is \alert{learned} rather than fixed in advance. \pause
+\item Each unit $j$ gets its \alert{own} kernel.
+\item [...] 	
+\end{itemize}
+
+} 
+
 \end{frame}
 
 \end{document}

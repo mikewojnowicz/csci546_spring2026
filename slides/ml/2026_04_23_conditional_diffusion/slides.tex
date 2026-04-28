@@ -1,0 +1,121 @@
+\documentclass[10pt]{beamer}
+
+%STANDARD PREAMBLE
+%https://tex.stackexchange.com/questions/68821/is-it-possible-to-create-a-latex-preamble-header
+\usepackage{/Users/miw267/Repos/latex_preamble/beamer_preamble}
+%\usepackage{/Users/miw267/Repos/csci246_spring2025/slides/preambles/beamer_preamble_for_CSCI246}
+
+
+%%%
+% SPECIFIC TO THIS DOCUMENT 
+%%%
+\usepackage{animate}
+
+\renewcommand{\ELBO}{\texttt{ELBO}}
+\renewcommand{\Q}{\mathcal{Q}}
+
+
+%%%%
+% DOCUMENT 
+%%%
+\title{04/23/2026: Conditional Diffusion}
+\author{Reference: \textit{Conditional Score-Based Diffusion Models (CSDI)}}
+\date{CSCI 546: Diffusion Models}
+
+\begin{document}
+\maketitle
+
+%\begin{frame}{Table of contents}
+%  \setbeamertemplate{section in toc}[sections numbered]
+%  \tableofcontents[hideallsubsections]
+%\end{frame}
+
+\begin{frame}{Table of contents}
+  \setbeamertemplate{section in toc}[sections numbered]
+  \setbeamertemplate{subsection in toc}[subsections numbered]
+  \tableofcontents
+\end{frame}
+
+
+
+
+
+\section{Course Logistics}
+
+
+
+
+\begin{frame}{Reading Survey \#9: Feedback}
+
+\textbf{Original Question:} After having read this paper, if you were constructing a diffusion model for images, which backbone would you use, and why?
+
+\vfill 
+
+\textbf{Feedback:} Most answers were fine.  Some people didn't answer the \qq{why}.
+
+\end{frame}
+
+
+\begin{frame}{Reading Survey \#10}
+How do the authors propose imputing missing values in time series data?
+\end{frame}
+
+
+
+
+\section{Lightning Chat: Landscape of Diffusion Model Research}
+
+
+
+
+\section{Lightning Chat: Conditional Score-Based Diffusion}
+
+\begin{frame}[standout]
+\href{https://docs.google.com/presentation/d/1i_iHb4rMHTgZkleerdyryA8Hdn3mvqSSLZQNyTmujlg/edit?slide=id.g3e03092e772_0_27\#slide=id.g3e03092e772_0_27}{\underline{Lightning Chat}} 
+\end{frame}
+
+
+
+\section{Class Discussion}
+
+\begin{frame}{Discussion Groups}
+\begin{columns}
+\begin{column}{0.33\textwidth}
+Aubrey Williams: 6 \\ 
+Austin Barton : 3 \\ 
+Blake Sigmundstad: 1 \\ 
+Diego Moylan: 1 \\ 
+Dillon Shaffer: 4 \\ 
+Ismoiljon Muzaffarov: 7 \\ 
+Jacob Tanner: 3 \\\end{column}
+\begin{column}{0.33\textwidth}
+Josh Stoneback: 2 \\ 
+Joshua Bowen: 8 \\ 
+Joshua Culwell: 4 \\ 
+Laura Banaszewski: 2 \\ 
+Lina Hommel: 8 \\\end{column}
+\begin{column}{0.33\textwidth}
+Logan Racz: 7 \\ 
+Matt Hall: 5 \\ 
+Mike Kadoshnikov: 3 \\ 
+Owen Cool: 1 \\ 
+Racquel Bowen: 5 \\ 
+Samuel Mocabee: 2 \\ 
+Tatiana Kirillova: 6 \\\end{column}
+\end{columns}
+
+\end{frame}
+
+\begin{frame}{Format for Discussion}
+
+\begin{enumerate}
+	\item \textbf{Small group discussion:} At whiteboard in small groups, write up your evaluation of the paper in the form of \alert{Good-Bad-Ugly-Beautiful}.
+	\item \textbf{Classroom discussion:} We'll circle around and report on our evaluations, and then launch into a class discussion.
+\end{enumerate}
+	
+\end{frame}
+
+
+
+\end{document}
+
